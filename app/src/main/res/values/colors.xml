@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--prime_colors-->
+    <color name="colorPrimary">#FF5476</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <!--customized_colors-->
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorLightGrey">#E3E0E3</color>
+    <color name="colorGrey">#BDBDBD</color>
+    <color name="colorDarkSeaColor">#607D8B</color>
+    <color name="colorMaterialDarkBlue">#3F51B5</color>
+    <color name="default_text_color">#BDBDBD</color>
+</resources>

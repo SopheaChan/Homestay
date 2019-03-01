@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/language_setting"
+        android:orderInCategory="100"
+        android:title="@string/text_language"
+        app:showAsAction="never">
+        <menu>
+            <group
+                android:id="@+id/language_options"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/khmer_language"
+                    android:icon="@drawable/ic_cambodia_flag"
+                    android:title="@string/text_khmer_language" />
+                <item
+                    android:id="@+id/english_language"
+                    android:checked="true"
+                    android:icon="@drawable/ic_uk_flag"
+                    android:title="@string/text_english_language" />
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_menu_search"
+        android:title="@string/text_search"
+        app:showAsAction="always" />
+<!--    <item
+        android:id="@+id/menu_close_search_box"
+        android:icon="@drawable/ic_menu_close_search_box"
+        android:title="Close search"
+        app:showAsAction="never" />-->
+    <item
+        android:id="@+id/menu_nearby_hotel"
+        android:icon="@drawable/ic_menu_nearby_hotel_1"
+        android:title="@string/text_nearby_hotel"
+        app:showAsAction="always" />
+</menu>
