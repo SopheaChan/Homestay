@@ -34,6 +34,7 @@ import com.example.homestay.custom.DialogMenu
 import com.example.homestay.custom.CustomDialog
 import com.example.homestay.listener.OnDialogMenuClickListener
 import com.example.homestay.ui.login.LoginActivity
+import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayOutputStream
 
 
@@ -44,7 +45,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var listHotel: MutableList<HotelData>
 
-    private lateinit var imgUserProfile: ImageView
+    private lateinit var imgUserProfile: CircleImageView
     private lateinit var tvUserName: TextView
     private lateinit var tvUserEmail: TextView
     private lateinit var dialogMenu: DialogMenu
