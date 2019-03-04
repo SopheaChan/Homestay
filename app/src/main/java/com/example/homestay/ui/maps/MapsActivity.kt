@@ -60,8 +60,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
         mMap.addMarker(MarkerOptions().position(sydney).title("Lavar Hotel")
-            /*.icon(BitmapDescriptorFactory.fromBitmap(
-            createCustomMarker(this@MapsActivity, R.drawable.ic_login_background_1,"Narender")))*/)
+            .icon(BitmapDescriptorFactory.fromBitmap(
+            createCustomMarker(this@MapsActivity, R.drawable.ic_login_background_1,"Narender"))))
 
         val cameraPosition = CameraPosition.Builder()
             .target(sydney)

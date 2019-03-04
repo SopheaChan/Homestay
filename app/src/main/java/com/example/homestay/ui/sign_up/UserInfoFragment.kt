@@ -1,17 +1,15 @@
 package com.example.homestay.ui.sign_up
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.AppCompatButton
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.homestay.R
-import com.example.homestay.ui.login.LoginActivity
+import com.example.homestay.model.UserBasicInfo
 import com.example.homestay.utils.MyObject
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.layout_sign_up_user_info.*
 
 class UserInfoFragment : Fragment(), View.OnClickListener {
@@ -19,6 +17,7 @@ class UserInfoFragment : Fragment(), View.OnClickListener {
     private lateinit var btnNext: AppCompatButton
 
     private val signUpMvpPresenter: SignUpMvpPresenter = SignUpPresenter()
+    private lateinit var userBasicInfo: UserBasicInfo
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.layout_sign_up_user_info, container, false)
@@ -31,17 +30,28 @@ class UserInfoFragment : Fragment(), View.OnClickListener {
         when (v.id) {
             R.id.btnNext -> {
                 val fragment = ContactInfoFragment()
+                val uName: String = etName.text.toString().trim()
+                val uSex: String = etSex.text.toString().trim()
+                val uAge: String = etAge.text.toString().trim()
+                val uAddress: String = etAddress.text.toString().trim()
 
-                if (etName.text.isEmpty() || etSex.text.isEmpty() || etAge.text.isEmpty() || etAddress.text.isEmpty()) {
+                if (uName.isEmpty() || uSex.isEmpty() || uAge.isEmpty() || uAddress.isEmpty()) {
                     if (etName.text.isEmpty()) etName.error = "required"
                     if (etSex.text.isEmpty()) etSex.error = "required"
                     if (etAge.text.isEmpty()) etAge.error = "required"
                     if (etAddress.text.isEmpty()) etAddress.error = "required"
                 } else {
-                    signUpMvpPresenter.onButtonNextListener(MyObject.getFragmentManager(), fragment)
+                    val userBasicInfo = UserBasicInfo(uName, uSex, uAge, uAddress)
+                    val bundle= Bundle()
+                    bundle.putSerializable("basicInfo", userBasicInfo)
+                    signUpMvpPresenter.onButtonNextListener(MyObject.getFragmentManager(), fragment, bundle)
                 }
             }
             else -> return
         }
+    }
+
+    fun setTextToEditText(text: String): Editable{
+        return Editable.Factory.getInstance().newEditable(text)
     }
 }

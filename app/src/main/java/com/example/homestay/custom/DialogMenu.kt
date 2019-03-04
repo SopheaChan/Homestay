@@ -72,8 +72,8 @@ class DialogMenu(private val context: Context, private val callback: OnDialogMen
     }
 
     companion object {
-        private val GALLERY = 1
-        private val CAMERA = 2
-        private val VIEW_PROFILE_PICTURE = 3
+        private val GALLERY = 3
+        private val CAMERA = 4
+        private val VIEW_PROFILE_PICTURE = 5
     }
 }
