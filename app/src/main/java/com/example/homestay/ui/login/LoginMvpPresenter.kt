@@ -10,6 +10,6 @@ interface LoginMvpPresenter {
         etPassword: EditText,
         dialogDisplayLoadingProgress: DialogDisplayLoadingProgress
     )
-
     fun setButtonSignUpListener()
+    fun checkUserLoginState(context: Activity, dialog: DialogDisplayLoadingProgress)
 }

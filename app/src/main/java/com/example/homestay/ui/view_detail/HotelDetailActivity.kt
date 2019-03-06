@@ -25,13 +25,15 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var hotelName: String
     private lateinit var hotelAddress: String
     private val customDialog = CustomDialog(this@HotelDetailActivity)
-    private lateinit var orderDialog: IOrderDialog
+    private val hotelDetailMvpPresenter: HotelDetailMvpPresenter = HotelDetailPresenter()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         setContentView(R.layout.activity_hotel_detail)
         setSupportActionBar(toolbarHotelDetail)
         supportActionBar?.title = null
@@ -87,9 +89,20 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId){
+        when (item?.itemId) {
             R.id.share -> {
 
+            }
+            R.id.add_to_favorite -> {
+                val title = item.title
+                if (title == "Mark as favorite") {
+                    item.setIcon(R.drawable.ic_favorite_border_light_pink_24dp)
+                    item.title = "Added to favorite"
+                    hotelDetailMvpPresenter.addToFavorite(this, hotelName, hotelAddress)
+                } else if (title == "Added to favorite") {
+                    item.setIcon(R.drawable.ic_menu_favorite_white)
+                    item.title = "Mark as favorite"
+                }
             }
             else -> return false
         }
@@ -97,7 +110,7 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when (v?.id){
+        when (v?.id) {
             R.id.btnViewHotelLocation -> {
                 startActivity(Intent(this, MapsActivity::class.java))
             }

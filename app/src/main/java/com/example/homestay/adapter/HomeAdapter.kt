@@ -14,10 +14,10 @@ import java.util.*
 
 
 open class HomeAdapter(
-    private val context: Context, private var listHotel: MutableList<HotelData>,
-    private val recyclerItemsClickedListener: RecyclerItemsClickedListener
-) :
+    private val context: Context, private var listHotel: MutableList<HotelData>) :
     RecyclerView.Adapter<HomeAdapter.ViewHolder>(), RatingBar.OnRatingBarChangeListener {
+
+    private var action : ((HotelData, ImageView) -> Unit) ?= null
 
     override fun onCreateViewHolder(container: ViewGroup, position: Int): ViewHolder {
         return ViewHolder(
@@ -39,9 +39,13 @@ open class HomeAdapter(
         viewHolder.tvHotelName.text = hotelData.hotelName
         viewHolder.tvHotelAddress.text = hotelData.hotelAddress
         viewHolder.imgHotelImage.setOnClickListener {
-            recyclerItemsClickedListener.onHotelPictureClickedListener(hotelData, viewHolder.imgHotelImage)
+            action?.invoke(hotelData, viewHolder.imgHotelImage)
         }
-        viewHolder.ratingBar.setOnRatingBarChangeListener(this)
+        viewHolder.ratingBar.onRatingBarChangeListener = this
+    }
+
+    fun setOnItemClickListener(action : (HotelData, ImageView) -> Unit){
+        this.action = action
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -55,13 +59,8 @@ open class HomeAdapter(
         Toast.makeText(context, "Rating changed, current rating " + ratingBar?.rating, Toast.LENGTH_SHORT).show()
     }
 
-    interface RecyclerItemsClickedListener {
-        fun onHotelPictureClickedListener(hotelData: HotelData, imageView: ImageView)
-    }
-
     fun getFilter(listHotelFiltered: MutableList<HotelData>) {
         listHotel = listHotelFiltered
         notifyDataSetChanged()
     }
-
 }

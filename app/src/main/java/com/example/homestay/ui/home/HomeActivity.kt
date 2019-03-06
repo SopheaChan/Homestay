@@ -10,31 +10,32 @@ import android.provider.MediaStore
 import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.ImageView
 import android.support.v7.widget.SearchView
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.homestay.R
 import com.example.homestay.adapter.HomeAdapter
-import com.example.homestay.adapter.HomeAdapter.RecyclerItemsClickedListener
-import com.example.homestay.model.HotelData
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.app_bar_home.*
-import android.widget.Toast
+import com.example.homestay.custom.CustomDialog
 import com.example.homestay.custom.DialogDisplayLoadingProgress
 import com.example.homestay.custom.DialogMenu
-import com.example.homestay.custom.CustomDialog
 import com.example.homestay.listener.OnDialogMenuClickListener
-import com.example.homestay.ui.login.LoginActivity
+import com.example.homestay.model.HotelData
+import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.app_bar_home.*
 import java.io.ByteArrayOutputStream
 
 
@@ -50,7 +51,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var tvUserEmail: TextView
     private lateinit var dialogMenu: DialogMenu
     private lateinit var searchViewHandler: SearchView
+    private lateinit var mAuth: FirebaseAuth
+    private var backPress: Int = 1
 
+    private lateinit var customDialog: CustomDialog
     private val homePresenter: HomeMvpPresenter = HomePresenter()
     private val dialogDisplayLoadingProgress = DialogDisplayLoadingProgress(this@HomeActivity)
 
@@ -90,25 +94,44 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        listHotel = mutableListOf<HotelData>()
+        listHotel = mutableListOf()
 
         recyclerView = findViewById(R.id.recycler_view_home_activity)
         recyclerView.hasFixedSize()
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
 
-        homeAdapter = HomeAdapter(this, listHotel, recyclerItemsClickedListener)
+        homeAdapter = HomeAdapter(this, listHotel)
+        homeAdapter.setOnItemClickListener { hotelData, imageView ->
+            homePresenter.onRecyclerImagesClicked(this@HomeActivity, hotelData, imageView)
+        }
 
         recyclerView.adapter = homeAdapter
 
         dialogDisplayLoadingProgress.displayLoadingProgressTimeDefined("Loading...")
         setDataToAdapter()
         etSearchHotel.addTextChangedListener(this)
-
+        homePresenter.onLoadUser(tvUserName, tvUserEmail, imgUserProfile, this)
+        customDialog = CustomDialog(this@HomeActivity)
     }
 
     private fun onUserProfileClicked() {
         dialogMenu.displayDialog()
+    }
+
+    override fun onBackPressed() {
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        when {
+            drawerLayout.isDrawerVisible(GravityCompat.START) -> {
+                drawerLayout.closeDrawer(GravityCompat.START)
+                backPress = 0
+            }
+            backPress < 1 -> {
+                Toast.makeText(this@HomeActivity, "Press back again to exit!", Toast.LENGTH_SHORT).show()
+                backPress++
+            }
+            else -> finish()
+        }
     }
 
     private val dialogMenuCallback = OnDialogMenuClickListener { result, view, dialog ->
@@ -126,6 +149,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
             VIEW_PROFILE_PICTURE -> {
+                val customDialog = CustomDialog(this)
+                customDialog.displayDialgo(R.layout.layout_view_profile_picture, R.style.DialogBookHotelTheme)
+                val imgProfile = customDialog.getDialog().findViewById<ImageView>(R.id.imgImageView)
+                val btnDone = customDialog.getDialog().findViewById<AppCompatButton>(R.id.btnDone)
+
+                homePresenter.onViewProfilePicture(imgProfile, btnDone, this, customDialog)
 
             }
             else -> return@OnDialogMenuClickListener
@@ -134,20 +163,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun setDataToAdapter() {
         homePresenter.setDataToList(listHotel, homeAdapter)
-    }
-
-    private var recyclerItemsClickedListener = object : RecyclerItemsClickedListener {
-        override fun onHotelPictureClickedListener(hotelData: HotelData, imageView: ImageView) {
-            homePresenter.onRecyclerImagesClicked(this@HomeActivity, hotelData, imageView)
-        }
-    }
-
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -166,7 +181,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.menu_search -> {
                 val getItemTitle = miSearch.title
-                if (getItemTitle == "Search"){
+                if (getItemTitle == "Search") {
                     tvTitle.visibility = View.GONE
                     etSearchHotel.visibility = View.VISIBLE
                     miSearch.icon = getDrawable(R.drawable.ic_menu_close_search_box)
@@ -193,11 +208,15 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.nav_sign_out -> {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
+                dialogDisplayLoadingProgress.displayLoadingProgressRecursive("Signing out...")
+                homePresenter.onSignOut(this, dialogDisplayLoadingProgress)
             }
             R.id.nav_about_us -> {
 
+            }
+
+            R.id.nav_favorite -> {
+                customDialog.displayDialgo(R.layout.dialog_favorite_list, R.style.DialogBookHotelTheme)
             }
         }
 
@@ -248,7 +267,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun openGallery() {
+    private fun openGallery() {
         val intent = Intent(
             Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -263,6 +282,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val imageUri = data!!.data
                     imgUserProfile.setImageURI(imageUri)
                     dialogMenu.dialog.dismiss()
+                    homePresenter.onUploadPhoto(this, imageUri, dialogDisplayLoadingProgress)
+                    dialogDisplayLoadingProgress.displayLoadingProgressRecursive("Uploading...")
                 }
                 CAMERA -> {
                     val extras = data!!.extras
@@ -274,6 +295,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         MediaStore.Images.Media.insertImage(contentResolver, imageBitmap, "profile_picture", null)
                     imgUserProfile.setImageURI(Uri.parse(path))
                     dialogMenu.dialog.dismiss()
+                    homePresenter.onUploadPhoto(this, Uri.parse(path), dialogDisplayLoadingProgress)
+                    dialogDisplayLoadingProgress.displayLoadingProgressRecursive("Uploading...")
                 }
             }
         }
@@ -298,11 +321,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         filter(s.toString())
     }
 
-    private fun filter(text: String){
+    private fun filter(text: String) {
         var listHotelFiltered: MutableList<HotelData> = mutableListOf()
 
-        for(hotel: HotelData in listHotel){
-            if(hotel.hotelName.toLowerCase().contains(text.toLowerCase())){
+        for (hotel: HotelData in listHotel) {
+            if (hotel.hotelName.toLowerCase().contains(text.toLowerCase())) {
                 listHotelFiltered.add(hotel)
             }
         }
@@ -310,11 +333,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         homeAdapter.getFilter(listHotelFiltered)
 
     }
+
     companion object {
-        private val GALLERY = 1
-        private val CAMERA = 2
-        private val VIEW_PROFILE_PICTURE = 3
-        private val REQUEST_CAMERA_PERMISSION = 4
-        private val REQUEST_EXTERNAL_STORAGE_PERMISSION = 5
+        private const val GALLERY = 1
+        private const val CAMERA = 2
+        private const val VIEW_PROFILE_PICTURE = 3
+        private const val REQUEST_CAMERA_PERMISSION = 4
+        private const val REQUEST_EXTERNAL_STORAGE_PERMISSION = 5
     }
 }

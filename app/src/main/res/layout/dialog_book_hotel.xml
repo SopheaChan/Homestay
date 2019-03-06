@@ -96,7 +96,8 @@
                         android:paddingStart="8dp"
                         android:paddingTop="@dimen/default_screen_margin"
                         android:paddingEnd="8dp"
-                        android:paddingBottom="@dimen/default_screen_margin">
+                        android:paddingBottom="@dimen/default_screen_margin"
+                        android:scrollbars="vertical">
 
                         <TextView
                             android:id="@+id/textView10"
@@ -291,10 +292,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/bg_button_state"
                 android:fontFamily="@font/alike"
-                android:text="Book Now"
+                android:text="@string/text_book_now"
                 android:textColor="@color/colorDarkSeaColor"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/cardView5"
                 app:layout_constraintStart_toStartOf="@+id/cardView5"
                 app:layout_constraintTop_toBottomOf="@+id/cardView5" />

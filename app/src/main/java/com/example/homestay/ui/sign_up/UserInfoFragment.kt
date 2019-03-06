@@ -16,13 +16,14 @@ class UserInfoFragment : Fragment(), View.OnClickListener {
 
     private lateinit var btnNext: AppCompatButton
 
-    private val signUpMvpPresenter: SignUpMvpPresenter = SignUpPresenter()
+    private lateinit var signUpMvpPresenter: SignUpMvpPresenter
     private lateinit var userBasicInfo: UserBasicInfo
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.layout_sign_up_user_info, container, false)
         btnNext = view.findViewById(R.id.btnNext)
         btnNext.setOnClickListener(this)
+        signUpMvpPresenter = SignUpPresenter(view.context)
         return view
     }
 

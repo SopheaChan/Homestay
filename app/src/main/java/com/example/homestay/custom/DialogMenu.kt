@@ -16,22 +16,6 @@ class DialogMenu(private val context: Context, private val callback: OnDialogMen
 
     init {
         this.dialog = Dialog(this.context, R.style.DialogTheme)
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        dialog.setContentView(R.layout.dialog_choose_profile_photo)
-//        dialog.window!!.setGravity(Gravity.BOTTOM)
-//        dialog.window!!.setLayout(
-//            WindowManager.LayoutParams.MATCH_PARENT,
-//            WindowManager.LayoutParams.WRAP_CONTENT
-//        )
-//        dialog.setCancelable(true)
-//        dialog.show()
-//
-//        val tvGallery = dialog.findViewById<TextView>(R.id.tvGallery)
-//        val tvTakePhoto = dialog.findViewById<TextView>(R.id.tvTakePhoto)
-//        val tvViewProfile = dialog.findViewById<TextView>(R.id.tvViewProfilePicture)
-//        tvGallery.setOnClickListener(this)
-//        tvTakePhoto.setOnClickListener(this)
-//        tvViewProfile.setOnClickListener(this)
     }
 
     fun displayDialog(){
@@ -72,8 +56,8 @@ class DialogMenu(private val context: Context, private val callback: OnDialogMen
     }
 
     companion object {
-        private val GALLERY = 3
-        private val CAMERA = 4
-        private val VIEW_PROFILE_PICTURE = 5
+        private const val GALLERY = 1
+        private const val CAMERA = 2
+        private const val VIEW_PROFILE_PICTURE = 3
     }
 }

@@ -2,4 +2,6 @@ package com.example.homestay.model
 
 import java.io.Serializable
 
-data class UserContact(val phone: String, val email: String, val otherContact: String): Serializable
+data class UserContact(var phone: String ?= null, var email: String ?= null, var otherContact: String ?= null): Serializable{
+    constructor() : this(null, null, null)
+}

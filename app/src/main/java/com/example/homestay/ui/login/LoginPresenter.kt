@@ -1,6 +1,6 @@
 package com.example.homestay.ui.login
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.util.Patterns
 import android.widget.EditText
@@ -8,8 +8,11 @@ import android.widget.Toast
 import com.example.homestay.custom.DialogDisplayLoadingProgress
 import com.example.homestay.ui.home.HomeActivity
 import com.example.homestay.ui.sign_up.SignUpActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
-class LoginPresenter(private val context: Context) : LoginMvpPresenter {
+class LoginPresenter(private val context: Activity) : LoginMvpPresenter {
+    lateinit var mFirebaseAuth: FirebaseAuth
 
     override fun setButtonLoginListener(
         etEmail: EditText,
@@ -28,13 +31,33 @@ class LoginPresenter(private val context: Context) : LoginMvpPresenter {
             }
             return
         } else {
-            dialogDisplayLoadingProgress.displayLoadingProgressTimeDefined("Signing in...")
-            context.startActivity(Intent(context, HomeActivity::class.java))
-            dialogDisplayLoadingProgress.getDialog().dismiss()
+            mFirebaseAuth = FirebaseAuth.getInstance()
+            mFirebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener{
+                    if (it.isSuccessful){
+                        context.startActivity(Intent(context, HomeActivity::class.java))
+                        context.finish()
+                        dialogDisplayLoadingProgress.getDialog().dismiss()
+                    } else{
+                        Toast.makeText(context, "Failed signing in...", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .addOnFailureListener{
+                    Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+                }
         }
     }
 
     override fun setButtonSignUpListener() {
         context.startActivity(Intent(context, SignUpActivity::class.java))
+    }
+
+    override fun checkUserLoginState(context: Activity, dialog: DialogDisplayLoadingProgress) {
+        mFirebaseAuth = FirebaseAuth.getInstance()
+        val mFirebaseUser: FirebaseUser ?= mFirebaseAuth.currentUser
+        if (mFirebaseUser != null){
+            context.startActivity(Intent(context, HomeActivity::class.java))
+            context.finish()
+        }
     }
 }

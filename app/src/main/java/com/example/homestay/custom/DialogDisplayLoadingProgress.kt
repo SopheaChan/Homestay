@@ -16,10 +16,11 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 import java.util.Objects
 
-class DialogDisplayLoadingProgress(private val context: Context) {
+class DialogDisplayLoadingProgress(private val mContext: Context) {
+
     private lateinit var dialog: Dialog
     fun displayLoadingProgressTimeDefined(title: String) {
-        dialog = Dialog(context, R.style.DialogTheme)
+        dialog = Dialog(mContext, R.style.DialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_loading_progress)
         dialog.window?.setGravity(Gravity.CENTER)
@@ -27,12 +28,12 @@ class DialogDisplayLoadingProgress(private val context: Context) {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT
         )
-        dialog!!.show()
+        dialog.show()
 
         val imgLoading = dialog.findViewById<ImageView>(R.id.imgLoadingProgress)
         val tvTitle = dialog.findViewById<TextView>(R.id.tvLoadingLabel)
         tvTitle.text = title
-        val animation = AnimationUtils.loadAnimation(context, R.anim.rotate)
+        val animation = AnimationUtils.loadAnimation(mContext, R.anim.rotate)
         imgLoading.animation = animation
         animation.duration = 5000
         animation.setAnimationListener(object : Animation.AnimationListener {
@@ -50,12 +51,13 @@ class DialogDisplayLoadingProgress(private val context: Context) {
         })
 
     }
-    fun getDialog(): Dialog{
+
+    fun getDialog(): Dialog {
         return this.dialog
     }
 
-    fun displayLoadingProgressRecursive(title: String){
-        dialog = Dialog(context, R.style.DialogTheme)
+    fun displayLoadingProgressRecursive(title: String) {
+        dialog = Dialog(mContext, R.style.DialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_loading_progress)
         dialog.window?.setGravity(Gravity.CENTER)
@@ -63,7 +65,7 @@ class DialogDisplayLoadingProgress(private val context: Context) {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT
         )
-        dialog!!.show()
+        dialog.show()
 
         val imgLoading = dialog.findViewById<ImageView>(R.id.imgLoadingProgress)
         val tvTitle = dialog.findViewById<TextView>(R.id.tvLoadingLabel)
@@ -71,8 +73,8 @@ class DialogDisplayLoadingProgress(private val context: Context) {
         setAnimation(imgLoading)
     }
 
-    fun setAnimation(imgLoading: ImageView){
-        val animation = AnimationUtils.loadAnimation(context, R.anim.rotate)
+    fun setAnimation(imgLoading: ImageView) {
+        val animation = AnimationUtils.loadAnimation(mContext, R.anim.rotate)
         imgLoading.animation = animation
         animation.duration = 3000
         animation.setAnimationListener(object : Animation.AnimationListener {

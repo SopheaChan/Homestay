@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgImageView"
+        android:layout_width="0dp"
+        android:layout_height="342dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_menu_gallery" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btnDone"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_button_state"
+        android:text="Done"
+        app:layout_constraintEnd_toEndOf="@id/imgImageView"
+        app:layout_constraintStart_toStartOf="@id/imgImageView"
+        app:layout_constraintTop_toBottomOf="@id/imgImageView" />
+</android.support.constraint.ConstraintLayout>

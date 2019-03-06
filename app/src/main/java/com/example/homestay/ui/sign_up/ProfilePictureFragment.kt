@@ -24,14 +24,16 @@ import com.example.homestay.utils.RequestCode
 import kotlinx.android.synthetic.main.layout_sign_up_profile_picture.*
 import android.graphics.Bitmap
 import android.R.attr.data
+import android.R.attr.dial
 import android.support.v4.app.NotificationCompat.getExtras
+import com.example.homestay.custom.DialogDisplayLoadingProgress
 import com.example.homestay.model.User
 import java.io.ByteArrayOutputStream
 
 
 class ProfilePictureFragment : Fragment(), View.OnClickListener {
 
-    private val signUpMvpPresenter: SignUpMvpPresenter = SignUpPresenter()
+    private lateinit var signUpMvpPresenter: SignUpMvpPresenter
     private lateinit var btnBack: FloatingActionButton
     private lateinit var userBasicInfo: UserBasicInfo
     private lateinit var userContact: UserContact
@@ -39,6 +41,7 @@ class ProfilePictureFragment : Fragment(), View.OnClickListener {
     private lateinit var imageDialog : DialogMenu
     private lateinit var path: String
     private var password: String = " "
+    private lateinit var dialogLoadingProgress: DialogDisplayLoadingProgress
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.layout_sign_up_profile_picture, container, false)
         val btnBrowseImage = view.findViewById<AppCompatButton>(R.id.btnBrowse)
@@ -46,6 +49,8 @@ class ProfilePictureFragment : Fragment(), View.OnClickListener {
         btnBrowseImage.setOnClickListener(this)
         btnBack.setOnClickListener(this)
         fragment = ContactInfoFragment()
+        signUpMvpPresenter = SignUpPresenter(view.context)
+        dialogLoadingProgress = DialogDisplayLoadingProgress(view.context)
         val bundle: Bundle ?= arguments
         if (bundle != null){
             userBasicInfo = bundle.getSerializable("basicInfo") as UserBasicInfo
@@ -98,7 +103,8 @@ class ProfilePictureFragment : Fragment(), View.OnClickListener {
             val profile: Uri ?= data?.data
             imgProfilePicture.setImageURI(profile)
             val user = User(userBasicInfo, userContact, profile.toString())
-            signUpMvpPresenter.saveUserToDatabase(user, password, context)
+            signUpMvpPresenter.saveUserToDatabase(user, password, context, dialogLoadingProgress)
+            dialogLoadingProgress.displayLoadingProgressRecursive("Saving user data...")
         } else if (requestCode == RequestCode.CAMERA && resultCode == Activity.RESULT_OK){
             val extras = data?.extras
             val imageBitmap = extras?.get("data") as Bitmap
@@ -109,7 +115,8 @@ class ProfilePictureFragment : Fragment(), View.OnClickListener {
             imgProfilePicture.setImageBitmap(imageBitmap)
             imgProfilePicture.setImageBitmap(imageBitmap)
             val user = User(userBasicInfo, userContact, path)
-            signUpMvpPresenter.saveUserToDatabase(user, password, context)
+            signUpMvpPresenter.saveUserToDatabase(user, password, context, dialogLoadingProgress)
+            dialogLoadingProgress.displayLoadingProgressRecursive("Saving user data...")
         }
     }
 }

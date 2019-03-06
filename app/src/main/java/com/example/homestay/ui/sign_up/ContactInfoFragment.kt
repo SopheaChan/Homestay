@@ -22,7 +22,7 @@ class ContactInfoFragment : Fragment(), View.OnClickListener {
 
     lateinit var btnNext : AppCompatButton
     lateinit var btnBack : AppCompatButton
-    private val signUpMvpPresenter : SignUpMvpPresenter = SignUpPresenter()
+    private lateinit var signUpMvpPresenter : SignUpMvpPresenter
     private lateinit var userBasicInfo: UserBasicInfo
     private lateinit var userContact: UserContact
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,6 +31,7 @@ class ContactInfoFragment : Fragment(), View.OnClickListener {
         btnBack = view.findViewById(R.id.btnBack1)
         btnNext.setOnClickListener(this)
         btnBack.setOnClickListener(this)
+        signUpMvpPresenter = SignUpPresenter(view.context)
         val bundle: Bundle ?= arguments
         if (bundle != null){
             userBasicInfo = bundle.getSerializable("basicInfo") as UserBasicInfo
@@ -48,9 +49,13 @@ class ContactInfoFragment : Fragment(), View.OnClickListener {
                 val fragment = ProfilePictureFragment()
                 val tel: String = etTel.text.toString().trim()
                 val email: String = etContactEmail.text.toString().trim()
+                val password: String = etPassword.text.toString().trim()
+                val conPassword: String = etConfirmPassword.text.toString().trim()
+
                 val otherContact: String = etOtherContact.text.toString().trim()
                 if (tel.isEmpty() || email.isEmpty() ||
-                    (!Patterns.EMAIL_ADDRESS.matcher(email).matches())){
+                    (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                    || password.isEmpty() || conPassword.isEmpty()){
                     if (etTel.text.isEmpty()) etTel.error = "phone number is invalid"
                     if (etContactEmail.text.isEmpty() || (!Patterns.EMAIL_ADDRESS.matcher(etContactEmail.text.toString()).matches()))
                         etContactEmail.error = "invalid email address"
