@@ -5,13 +5,18 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.AppCompatButton
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.example.homestay.R
+import com.example.homestay.adapter.FavoriteHotelAdapter
 import com.example.homestay.adapter.HomeAdapter
 import com.example.homestay.custom.CustomDialog
 import com.example.homestay.custom.DialogDisplayLoadingProgress
+import com.example.homestay.model.FavoriteList
 import com.example.homestay.model.HotelData
 import com.example.homestay.model.User
 import com.example.homestay.ui.login.LoginActivity
@@ -22,7 +27,6 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlin.contracts.contract
 
 class HomePresenter : HomeMvpPresenter {
     private var mAuth: FirebaseAuth
@@ -39,18 +43,30 @@ class HomePresenter : HomeMvpPresenter {
     }
 
     override fun setDataToList(hotelList: MutableList<HotelData>, adapter: HomeAdapter) {
-        val hotelData1 = HotelData("https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-            "Lava Hotel", "st. 26DC, New York, USA")
-        val hotelData2 = HotelData("https://images.pexels.com/photos/167533/pexels-photo-167533.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=500&w=500",
-            "The Park Hotel", "st. 123AY, Athene, Greece")
-        val hotelData3 = HotelData("https://images.pexels.com/photos/97083/pexels-photo-97083.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=500&w=500",
-            "The Light Hotel", "st. 56NB, London, England")
-        val hotelData4 = HotelData("https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-            "Lava Hotel", "st. 26DC, New York, USA")
-        val hotelData5 = HotelData("https://images.pexels.com/photos/167533/pexels-photo-167533.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=500&w=500",
-            "The Park Hotel", "st. 123AY, Athene, Greece")
-        val hotelData6 = HotelData("https://images.pexels.com/photos/97083/pexels-photo-97083.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=500&w=500",
-            "The Light Hotel", "st. 56NB, London, England")
+        val hotelData1 = HotelData(
+            "https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+            "Lava Hotel", "st. 26DC, New York, USA"
+        )
+        val hotelData2 = HotelData(
+            "https://images.pexels.com/photos/167533/pexels-photo-167533.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=500&w=500",
+            "The Park Hotel", "st. 123AY, Athene, Greece"
+        )
+        val hotelData3 = HotelData(
+            "https://images.pexels.com/photos/97083/pexels-photo-97083.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=500&w=500",
+            "The Light Hotel", "st. 56NB, London, England"
+        )
+        val hotelData4 = HotelData(
+            "https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+            "The Sky Hotel", "st. 24BC, San Francisco, USA"
+        )
+        val hotelData5 = HotelData(
+            "https://images.pexels.com/photos/167533/pexels-photo-167533.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=500&w=500",
+            "The Star Hotel", "st. 11AS, Bali, Indonesia"
+        )
+        val hotelData6 = HotelData(
+            "https://images.pexels.com/photos/97083/pexels-photo-97083.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=500&w=500",
+            "The Moon Hotel", "st. 72B0, Rio de Janeiro, Brazil"
+        )
         hotelList.add(hotelData1)
         hotelList.add(hotelData2)
         hotelList.add(hotelData3)
@@ -73,16 +89,16 @@ class HomePresenter : HomeMvpPresenter {
 
     override fun onLoadUser(tvUserName: TextView, tvEmail: TextView, imgProfile: CircleImageView, context: Activity) {
         mDatabaseRef = mFirebaseDb.getReference("profile").child(mUserID)
-        mDatabaseRef.addListenerForSingleValueEvent(object : ValueEventListener{
+        mDatabaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: User ?= dataSnapshot.getValue(User::class.java)
-                    tvUserName.text = user?.userBasicInfo?.name ?: "N/A"
-                    tvEmail.text = user?.userContact?.email ?: "N/A"
-                    Glide.with(context.baseContext).load(user?.uProfile).into(imgProfile)
+                val user: User? = dataSnapshot.getValue(User::class.java)
+                tvUserName.text = user?.userBasicInfo?.name ?: "N/A"
+                tvEmail.text = user?.userContact?.email ?: "N/A"
+                Glide.with(context.baseContext).load(user?.uProfile).into(imgProfile)
             }
 
         })
@@ -90,54 +106,117 @@ class HomePresenter : HomeMvpPresenter {
 
     override fun onSignOut(context: Activity, dialog: DialogDisplayLoadingProgress) {
         mAuth.signOut()
-        mAuth.addAuthStateListener { FirebaseAuth.AuthStateListener {
-            context.baseContext.startActivity(Intent(context, LoginActivity::class.java))
-            context.finish()
-            dialog.getDialog().dismiss()
-        } }
+        mAuth.addAuthStateListener {
+            FirebaseAuth.AuthStateListener {
+                context.baseContext.startActivity(Intent(context, LoginActivity::class.java))
+                context.finish()
+                dialog.getDialog().dismiss()
+            }
+        }
     }
 
     override fun onUploadPhoto(context: Activity, newImage: Uri, dialogLoadingProgress: DialogDisplayLoadingProgress) {
         val storageRef: StorageReference = FirebaseStorage.getInstance().getReference("profile").child(mUserID)
         val storageTask = storageRef.putFile(newImage)
-            .addOnCompleteListener{ taskUpload ->
-                if (taskUpload.isSuccessful){
+            .addOnCompleteListener { taskUpload ->
+                if (taskUpload.isSuccessful) {
                     storageRef.downloadUrl
                         .addOnCompleteListener {
-                            if (it.isSuccessful){
-                                val downloadUrl: Uri ?= it.result
+                            if (it.isSuccessful) {
+                                val downloadUrl: Uri? = it.result
                                 FirebaseDatabase.getInstance().getReference("profile").child(mUserID)
                                     .child("uprofile").setValue(downloadUrl.toString())
                                     .addOnCompleteListener {
                                         dialogLoadingProgress.getDialog().dismiss()
                                     }
-                            } else{
+                            } else {
                                 dialogLoadingProgress.getDialog().dismiss()
-                                Toast.makeText(context.baseContext, "Failed to upload image...", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context.baseContext, "Failed to upload image...", Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
-                } else{
+                } else {
                     dialogLoadingProgress.getDialog().dismiss()
                     Toast.makeText(context.baseContext, "Failed to upload image...", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
-    override fun onViewProfilePicture(imgImageView: ImageView, btnDone: AppCompatButton, context: Activity, dialog: CustomDialog) {
+    override fun onViewProfilePicture(
+        imgImageView: ImageView,
+        btnDone: AppCompatButton,
+        context: Activity,
+        dialog: CustomDialog
+    ) {
         mDatabaseRef = mFirebaseDb.getReference("profile").child(mUserID)
-        mDatabaseRef.addListenerForSingleValueEvent(object : ValueEventListener{
+        mDatabaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: User ?= dataSnapshot.getValue(User::class.java)
+                val user: User? = dataSnapshot.getValue(User::class.java)
                 Glide.with(context.baseContext).load(user?.uProfile).into(imgImageView)
-                btnDone.setOnClickListener{
+                btnDone.setOnClickListener {
                     dialog.getDialog().dismiss()
                 }
             }
 
         })
+    }
+
+    override fun onViewFavoriteList(context: Activity, layoutID: Int, layoutStyle: Int, customDialog: CustomDialog) {
+        customDialog.displayDialog(R.layout.dialog_favorite_list, R.style.DialogBookHotelTheme)
+        val listFavoriteHotel: ArrayList<FavoriteList?> = ArrayList()
+        val adapter = FavoriteHotelAdapter(listFavoriteHotel, context)
+        val mutableList: MutableList<FavoriteList?> = mutableListOf()
+        val recyclerView: RecyclerView = customDialog.getDialog().findViewById(R.id.recyclerview_favorite_hotel)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.hasFixedSize()
+        recyclerView.adapter = adapter
+        adapter.notifyDataSetChanged()
+
+        mDatabaseRef = mFirebaseDb.getReference("favorite")
+            .child(mUserID)
+        mDatabaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val children = dataSnapshot.children
+                children.forEach {
+                    val favoriteList = it.getValue(FavoriteList::class.java)
+                    mutableList.add(favoriteList)
+                    listFavoriteHotel.add(favoriteList)
+                }
+                adapter.notifyDataSetChanged()
+            }
+
+        })
+
+        adapter.onRemoveFromListClicklistener{favoriteList, arrayList ->
+            removeFromFavoriteList(favoriteList, arrayList, mDatabaseRef, context, adapter)
+        }
+    }
+
+    private fun removeFromFavoriteList(
+        favoriteHotel: FavoriteList?,
+        listFavoriteHotel: ArrayList<FavoriteList?>,
+        databaseReference: DatabaseReference,
+        context: Activity,
+        adapter: FavoriteHotelAdapter
+    ) {
+        val issueDate = favoriteHotel?.issueDate!!
+        databaseReference.child(issueDate)
+            .removeValue().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    listFavoriteHotel.remove(favoriteHotel)
+                    adapter.notifyDataSetChanged()
+                    Toast.makeText(context, "Item was removed...", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Failed to remove item from list...", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }

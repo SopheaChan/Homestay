@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.widget.Toast
+import com.example.homestay.model.FavoriteList
 import com.example.homestay.utils.GetCurrentDateTime
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -15,12 +16,15 @@ class HotelDetailPresenter : HotelDetailMvpPresenter{
     override fun addToFavorite(context: Activity, hotelName: String, hotelAddress: String) {
         val firebaseUser: FirebaseUser ?= FirebaseAuth.getInstance().currentUser
         val userID: String = firebaseUser!!.uid
+        val issueDate: String = GetCurrentDateTime.getCurrentTimeUsingDate() ?: "default date"
+        val favoriteList = FavoriteList(hotelName, hotelAddress, issueDate)
         val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("favorite")
             .child(userID)
-            .child(GetCurrentDateTime.getCurrentTimeUsingDate())
-        databaseReference.child("hotelName").setValue(hotelName)
+            .child(issueDate)
+        databaseReference.setValue(favoriteList)
+        /*databaseReference.child("hotelName").setValue(hotelName)
         databaseReference.child("hotelAddress").setValue(hotelAddress)
-        databaseReference.child("time").setValue(GetCurrentDateTime.getCurrentTimeUsingDate())
+        databaseReference.child("time").setValue(GetCurrentDateTime.getCurrentTimeUsingDate())*/
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
 

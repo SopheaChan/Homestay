@@ -11,4 +11,5 @@
     <dimen name="button_height">40dp</dimen>
     <dimen name="default_text_size">16sp</dimen>
     <dimen name="min_screen_margin">4dp</dimen>
+    <dimen name="invoice_default_view_padding">16dp</dimen>
 </resources>

@@ -2,54 +2,70 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="3dp"
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="30dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/alike"
-            android:textSize="14sp"
-            android:paddingStart="2dp"
-            android:paddingEnd="2dp"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvAddress"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/alike"
-            android:textSize="14sp"
-            android:paddingStart="2dp"
-            android:paddingEnd="2dp"/>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnRemoveFromFavorite"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:tooltipText="Remove from favorite list"
+                android:background="@drawable/ic_button_remove_from_favorite_list_state"/>
 
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/alike"
-            android:textSize="14sp"
-            android:paddingStart="2dp"
-            android:paddingEnd="2dp"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/alike"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/alike"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/alike"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

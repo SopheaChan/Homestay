@@ -22,15 +22,20 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.homestay.R
+import com.example.homestay.adapter.FavoriteHotelAdapter
 import com.example.homestay.adapter.HomeAdapter
 import com.example.homestay.custom.CustomDialog
 import com.example.homestay.custom.DialogDisplayLoadingProgress
 import com.example.homestay.custom.DialogMenu
 import com.example.homestay.listener.OnDialogMenuClickListener
+import com.example.homestay.model.FavoriteList
 import com.example.homestay.model.HotelData
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
@@ -113,6 +118,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         etSearchHotel.addTextChangedListener(this)
         homePresenter.onLoadUser(tvUserName, tvUserEmail, imgUserProfile, this)
         customDialog = CustomDialog(this@HomeActivity)
+        setAnimationToTitle(tvTitle)
     }
 
     private fun onUserProfileClicked() {
@@ -150,7 +156,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             VIEW_PROFILE_PICTURE -> {
                 val customDialog = CustomDialog(this)
-                customDialog.displayDialgo(R.layout.layout_view_profile_picture, R.style.DialogBookHotelTheme)
+                customDialog.displayDialog(R.layout.layout_view_profile_picture, R.style.DialogBookHotelTheme)
                 val imgProfile = customDialog.getDialog().findViewById<ImageView>(R.id.imgImageView)
                 val btnDone = customDialog.getDialog().findViewById<AppCompatButton>(R.id.btnDone)
 
@@ -182,10 +188,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.menu_search -> {
                 val getItemTitle = miSearch.title
                 if (getItemTitle == "Search") {
-                    tvTitle.visibility = View.GONE
-                    etSearchHotel.visibility = View.VISIBLE
-                    miSearch.icon = getDrawable(R.drawable.ic_menu_close_search_box)
-                    miSearch.title = "Close"
+                    setAnimationToTitle(tvTitle)
+//                    tvTitle.visibility = View.GONE
+//                    etSearchHotel.visibility = View.VISIBLE
+//                    miSearch.icon = getDrawable(R.drawable.ic_menu_close_search_box)
+//                    miSearch.title = "Close"
                 } else {
                     etSearchHotel.visibility = View.INVISIBLE
                     etSearchHotel.text = null
@@ -202,6 +209,45 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return false
     }
 
+    private fun setAnimationToTitle(tvTitle: TextView) {
+        val animation = AnimationUtils.loadAnimation(this@HomeActivity, R.anim.view_anim)
+        tvTitle.animation = animation
+        animation.duration = 3000
+        animation.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(animation: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                setAnimationIn(tvTitle)
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+
+            }
+
+        })
+    }
+
+    private fun setAnimationIn(tvTitle: TextView){
+        val animation = AnimationUtils.loadAnimation(this@HomeActivity, R.anim.view_animation_in)
+        tvTitle.animation = animation
+        animation.duration = 3000
+        animation.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(animation: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                setAnimationToTitle(tvTitle)
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+            }
+
+        })
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_location -> {
@@ -216,12 +262,16 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_favorite -> {
-                customDialog.displayDialgo(R.layout.dialog_favorite_list, R.style.DialogBookHotelTheme)
+                openFavoriteListDialog()
             }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun openFavoriteListDialog() {
+        homePresenter.onViewFavoriteList(this@HomeActivity, R.layout.dialog_favorite_list, R.style.DialogBookHotelTheme, customDialog)
     }
 
     private fun checkCameraPermission(): Boolean {

@@ -5,10 +5,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.TextView
 import com.example.homestay.R
 import com.example.homestay.adapter.ImageSlideshowAdapter
 import com.example.homestay.custom.CustomDialog
-import com.example.homestay.custom.IOrderDialog
 import com.example.homestay.ui.maps.MapsActivity
 import kotlinx.android.synthetic.main.activity_hotel_detail.*
 import java.util.*
@@ -80,7 +82,29 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
         btnViewHotelLocation.setOnClickListener(this)
         btnViewHotelDescription.setOnClickListener(this)
         btnBookHotel.setOnClickListener(this)
+//        setAnimationToView()
     }
+
+    //set animation to tvDetailRoomPrice
+   /* private fun setAnimationToView() {
+        val animation = AnimationUtils.loadAnimation(this@HotelDetailActivity, R.anim.view_anim)
+        tvDetailRoomPrice.animation = animation
+        animation.duration = 5000
+        animation.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(animation: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                setAnimationToView()
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+
+            }
+
+        })
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
@@ -115,10 +139,10 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(Intent(this, MapsActivity::class.java))
             }
             R.id.btnViewHotelDescription -> {
-                customDialog.displayDialgo(R.layout.dialog_view_hotel_description, R.style.DialogTheme)
+                customDialog.displayDialog(R.layout.dialog_view_hotel_description, R.style.DialogTheme)
             }
             R.id.btnBookHotel -> {
-                customDialog.displayDialgo(R.layout.dialog_book_hotel, R.style.DialogBookHotelTheme)
+                customDialog.displayDialog(R.layout.dialog_book_hotel, R.style.DialogBookHotelTheme)
             }
         }
     }

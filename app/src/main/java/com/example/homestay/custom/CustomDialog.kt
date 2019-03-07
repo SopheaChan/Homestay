@@ -15,7 +15,7 @@ import com.example.homestay.ui.home.HomeMvpView
 class CustomDialog constructor(private val context: Context){
     private lateinit var dialog: Dialog
 
-    fun displayDialgo(layoutID: Int, dialogStyle: Int){
+    fun displayDialog(layoutID: Int, dialogStyle: Int){
 
         dialog = Dialog(context, dialogStyle)
         dialog.window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
