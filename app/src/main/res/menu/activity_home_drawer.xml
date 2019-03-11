@@ -4,6 +4,10 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_profile"
+            android:title="@string/text_profile" />
+        <item
             android:id="@+id/nav_location"
             android:icon="@drawable/ic_menu_location"
             android:title="@string/text_location" />
@@ -11,10 +15,6 @@
             android:id="@+id/nav_booking"
             android:icon="@drawable/ic_menu_booking"
             android:title="@string/text_booking" />
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_menu_profile"
-            android:title="@string/text_profile" />
         <item
             android:id="@+id/nav_budget"
             android:icon="@drawable/ic_menu_budget"

@@ -183,7 +183,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
                             android:fontFamily="@font/alike"
-                            android:text="CHECK-IN"
+                            android:text="@string/text_check_in"
                             android:textAllCaps="true"
                             android:textSize="12sp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -255,7 +255,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="32dp"
                             android:fontFamily="@font/alike"
-                            android:text="CHECK-OUT"
+                            android:text="@string/text_check_out"
                             android:textAllCaps="true"
                             android:textSize="12sp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -265,13 +265,16 @@
                             android:id="@+id/tvCheckOutData"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
                             android:fontFamily="@font/alike"
                             android:text="08, MAR 2019"
                             android:textAllCaps="true"
                             android:textColor="@color/common_google_signin_btn_text_dark_focused"
                             android:textSize="14sp"
-                            tools:layout_editor_absoluteX="53dp"
-                            tools:layout_editor_absoluteY="26dp" />
+                            app:layout_constraintEnd_toEndOf="@+id/textView31"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/textView31"
+                            app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
                         <TextView
                             android:id="@+id/tvCheckOutTime"

@@ -7,6 +7,8 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -148,6 +150,10 @@ class HomePresenter : HomeMvpPresenter {
         context: Activity,
         dialog: CustomDialog
     ) {
+        val animationIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        animationIn.duration = 1000
+        imgImageView.animation = animationIn
+        btnDone.animation = animationIn
         mDatabaseRef = mFirebaseDb.getReference("profile").child(mUserID)
         mDatabaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -158,6 +164,10 @@ class HomePresenter : HomeMvpPresenter {
                 val user: User? = dataSnapshot.getValue(User::class.java)
                 Glide.with(context.baseContext).load(user?.uProfile).into(imgImageView)
                 btnDone.setOnClickListener {
+//                    val animationOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
+//                    animationOut.duration = 500
+//                    imgImageView.animation = animationOut
+//                    btnDone.animation = animationOut
                     dialog.getDialog().dismiss()
                 }
             }

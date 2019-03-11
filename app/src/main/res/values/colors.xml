@@ -12,4 +12,5 @@
     <color name="colorDarkSeaColor">#607D8B</color>
     <color name="colorMaterialDarkBlue">#3F51B5</color>
     <color name="default_text_color">#BDBDBD</color>
+    <color name="activity_profile_toolbar_background">#4CAF50</color>
 </resources>

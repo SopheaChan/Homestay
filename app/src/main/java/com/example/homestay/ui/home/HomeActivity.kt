@@ -8,8 +8,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.design.widget.NavigationView
+import android.support.transition.TransitionSet
 import android.support.v4.app.ActivityCompat
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.animation.LinearOutSlowInInterpolator
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -19,6 +21,8 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.text.Editable
 import android.text.TextWatcher
+import android.transition.Transition
+import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -37,6 +41,7 @@ import com.example.homestay.custom.DialogMenu
 import com.example.homestay.listener.OnDialogMenuClickListener
 import com.example.homestay.model.FavoriteList
 import com.example.homestay.model.HotelData
+import com.example.homestay.ui.profile.ProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_home.*
@@ -68,6 +73,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         setContentView(com.example.homestay.R.layout.activity_home)
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.app_title)
@@ -118,7 +124,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         etSearchHotel.addTextChangedListener(this)
         homePresenter.onLoadUser(tvUserName, tvUserEmail, imgUserProfile, this)
         customDialog = CustomDialog(this@HomeActivity)
-        setAnimationToTitle(tvTitle)
+//        setAnimationToTitle(tvTitle)
     }
 
     private fun onUserProfileClicked() {
@@ -189,14 +195,15 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val getItemTitle = miSearch.title
                 if (getItemTitle == "Search") {
                     setAnimationToTitle(tvTitle)
-//                    tvTitle.visibility = View.GONE
+                    tvTitle.visibility = View.GONE
 //                    etSearchHotel.visibility = View.VISIBLE
-//                    miSearch.icon = getDrawable(R.drawable.ic_menu_close_search_box)
-//                    miSearch.title = "Close"
+                    miSearch.icon = getDrawable(R.drawable.ic_menu_close_search_box)
+                    miSearch.title = "Close"
                 } else {
+                    setAnimationToEtSearch(etSearchHotel)
                     etSearchHotel.visibility = View.INVISIBLE
                     etSearchHotel.text = null
-                    tvTitle.visibility = View.VISIBLE
+//                    tvTitle.visibility = View.VISIBLE
                     miSearch.icon = getDrawable(R.drawable.ic_menu_search)
                     miSearch.title = "Search"
                 }
@@ -210,16 +217,17 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun setAnimationToTitle(tvTitle: TextView) {
-        val animation = AnimationUtils.loadAnimation(this@HomeActivity, R.anim.view_anim)
+        val animation = AnimationUtils.loadAnimation(this@HomeActivity, R.anim.fade_out)
+        animation.duration = 700
         tvTitle.animation = animation
-        animation.duration = 3000
         animation.setAnimationListener(object : Animation.AnimationListener{
             override fun onAnimationRepeat(animation: Animation?) {
 
             }
 
             override fun onAnimationEnd(animation: Animation?) {
-                setAnimationIn(tvTitle)
+                setAnimationIn(etSearchHotel)
+//                setAnimationToTitle(tvTitle)
             }
 
             override fun onAnimationStart(animation: Animation?) {
@@ -229,17 +237,57 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
-    private fun setAnimationIn(tvTitle: TextView){
-        val animation = AnimationUtils.loadAnimation(this@HomeActivity, R.anim.view_animation_in)
-        tvTitle.animation = animation
-        animation.duration = 3000
+    private fun setAnimationIn(etSearch: EditText){
+        val animation = AnimationUtils.loadAnimation(this@HomeActivity, R.anim.fade_in)
+        animation.duration = 700
+        etSearch.animation = animation
         animation.setAnimationListener(object : Animation.AnimationListener{
             override fun onAnimationRepeat(animation: Animation?) {
 
             }
 
             override fun onAnimationEnd(animation: Animation?) {
-                setAnimationToTitle(tvTitle)
+                etSearch.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+            }
+
+        })
+    }
+
+    private fun setAnimationToEtSearch(etSearch: EditText) {
+        val animation = AnimationUtils.loadAnimation(this@HomeActivity, R.anim.fade_out)
+        animation.duration = 700
+        etSearch.animation = animation
+        animation.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(animation: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                setTitleAnimationIn(tvTitle)
+//                setAnimationToTitle(tvTitle)
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+
+            }
+
+        })
+    }
+
+    private fun setTitleAnimationIn(textTitle: TextView){
+        val animation = AnimationUtils.loadAnimation(this@HomeActivity, R.anim.fade_in)
+        animation.duration = 700
+        textTitle.animation = animation
+        animation.setAnimationListener(object : Animation.AnimationListener{
+            override fun onAnimationRepeat(animation: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                textTitle.visibility = View.VISIBLE
             }
 
             override fun onAnimationStart(animation: Animation?) {
@@ -263,6 +311,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.nav_favorite -> {
                 openFavoriteListDialog()
+            }
+            R.id.nav_profile -> {
+                startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
             }
         }
 

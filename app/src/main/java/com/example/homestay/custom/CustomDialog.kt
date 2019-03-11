@@ -4,11 +4,14 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.SearchView
+import android.text.Layout
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import com.example.homestay.R
 import com.example.homestay.ui.home.HomeMvpView
 

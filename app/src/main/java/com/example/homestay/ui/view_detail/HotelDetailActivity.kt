@@ -1,5 +1,6 @@
 package com.example.homestay.ui.view_detail
 
+import android.app.Dialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,8 @@ import com.example.homestay.ui.maps.MapsActivity
 import kotlinx.android.synthetic.main.activity_hotel_detail.*
 import java.util.*
 import kotlin.collections.ArrayList
+import com.example.homestay.R.layout.dialog_book_hotel
+import com.example.homestay.ui.book_hotel.BookHotelActivity
 
 class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -142,7 +145,7 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
                 customDialog.displayDialog(R.layout.dialog_view_hotel_description, R.style.DialogTheme)
             }
             R.id.btnBookHotel -> {
-                customDialog.displayDialog(R.layout.dialog_book_hotel, R.style.DialogBookHotelTheme)
+                startActivity(Intent(this, BookHotelActivity::class.java))
             }
         }
     }

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.book_hotel.BookHotelActivity">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView11"
+        android:layout_width="0dp"
+        android:layout_height="237dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_hotel_description_sample" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cardView11"
+        app:layout_constraintStart_toStartOf="@+id/cardView11"
+        app:layout_constraintTop_toBottomOf="@+id/cardView11">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorDarkSeaColor">
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:elevation="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_invoice_viewgroup_border"
+                    android:paddingTop="@dimen/invoice_default_view_padding"
+                    android:paddingBottom="@dimen/invoice_default_view_padding">
+
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/alike"
+                        android:text="@string/text_check_in"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvChooseCheckInDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:fontFamily="@font/alike"
+                        android:text="13-Mar-2019"
+                        android:textAllCaps="true"
+                        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@+id/textView21"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/textView21"
+                        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+                    <TextView
+                        android:id="@+id/tvChooseCheckInTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:fontFamily="@font/alike"
+                        android:text="12:00pm"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tvChooseCheckInDate"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/tvChooseCheckInDate"
+                        app:layout_constraintTop_toBottomOf="@+id/tvChooseCheckInDate" />
+
+                    <TextView
+                        android:id="@+id/textView222"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/alike"
+                        android:text="@string/text_check_in"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvChooseCheckOutDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:drawableStart="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:fontFamily="@font/alike"
+                        android:text="13-Mar-2019"
+                        android:textAllCaps="true"
+                        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@+id/textView222"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@+id/textView222"
+                        app:layout_constraintTop_toBottomOf="@+id/textView222" />
+
+                    <TextView
+                        android:id="@+id/tvChooseCheckOutTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/alike"
+                        android:text="12:00pm"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tvChooseCheckOutDate"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@+id/tvChooseCheckOutDate"
+                        app:layout_constraintTop_toBottomOf="@+id/tvChooseCheckOutDate" />
+
+                    <TextView
+                        android:id="@+id/tvNumberOfDays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/alike"
+                        android:text="2 nights"
+                        android:textAllCaps="true"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvChooseCheckInDate"
+                        app:layout_constraintEnd_toStartOf="@+id/tvChooseCheckOutDate"
+                        app:layout_constraintStart_toEndOf="@+id/tvChooseCheckInDate"
+                        app:layout_constraintTop_toTopOf="@+id/tvChooseCheckInDate"
+                        app:layout_constraintVertical_bias="0.3" />
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:elevation="3dp"
+                app:layout_constraintEnd_toEndOf="@+id/cardView12"
+                app:layout_constraintStart_toStartOf="@+id/cardView12"
+                app:layout_constraintTop_toBottomOf="@+id/cardView12">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_invoice_viewgroup_border"
+                    android:paddingTop="@dimen/invoice_default_view_padding"
+                    android:paddingBottom="@dimen/invoice_default_view_padding">
+
+                    <TextView
+                        android:id="@+id/textView35"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/alike"
+                        android:text="Room Type"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView39"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/alike"
+                        android:text="Quantity"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/tvNumberOfGuests"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:drawableStart="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:fontFamily="@font/alike"
+                        android:text="2 Guests"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/static_spinner"
+                        app:layout_constraintEnd_toStartOf="@+id/editText2"
+                        app:layout_constraintStart_toEndOf="@+id/static_spinner"
+                        app:layout_constraintTop_toTopOf="@+id/static_spinner"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <Spinner
+                        android:id="@+id/static_spinner"
+                        style="@style/MySpinnerLook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="start"
+                        app:layout_constraintEnd_toEndOf="@+id/textView35"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/textView35"
+                        app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+                    <EditText
+                        android:id="@+id/editText2"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="7dp"
+                        android:ems="10"
+                        android:fontFamily="@font/alike"
+                        android:hint="1 Room"
+                        android:inputType="textPersonName"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvNumberOfGuests"
+                        app:layout_constraintEnd_toEndOf="@+id/textView39"
+                        app:layout_constraintTop_toTopOf="@+id/tvNumberOfGuests"
+                        app:layout_constraintVertical_bias="0.428" />
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:elevation="3dp"
+                app:layout_constraintEnd_toEndOf="@+id/cardView13"
+                app:layout_constraintStart_toStartOf="@+id/cardView13"
+                app:layout_constraintTop_toBottomOf="@+id/cardView13">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_invoice_viewgroup_border"
+                    android:paddingTop="@dimen/invoice_default_view_padding"
+                    android:paddingBottom="@dimen/invoice_default_view_padding">
+
+                    <TextView
+                        android:id="@+id/textView44"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/alike"
+                        android:text="The Star Hotel"
+                        android:textAlignment="center"
+                        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView45"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/alike"
+                        android:text="st. 123AY, Athene, Greece"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/textView44"
+                        app:layout_constraintStart_toStartOf="@+id/textView44"
+                        app:layout_constraintTop_toBottomOf="@+id/textView44" />
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:elevation="3dp"
+                app:layout_constraintEnd_toEndOf="@+id/cardView14"
+                app:layout_constraintStart_toStartOf="@+id/cardView14"
+                app:layout_constraintTop_toBottomOf="@+id/cardView14">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_invoice_viewgroup_border"
+                    android:paddingTop="@dimen/invoice_default_view_padding"
+                    android:paddingBottom="@dimen/invoice_default_view_padding">
+
+                    <TextView
+                        android:id="@+id/textView40"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/alike"
+                        android:text="GUEST"
+                        android:textAlignment="viewStart"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvGuestName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/alike"
+                        android:text="JOHN TOMSON"
+                        android:textAlignment="viewStart"
+                        android:textAllCaps="true"
+                        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                        app:layout_constraintEnd_toEndOf="@+id/textView40"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/textView40"
+                        app:layout_constraintTop_toBottomOf="@+id/textView40" />
+
+                    <TextView
+                        android:id="@+id/textView42"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/alike"
+                        android:text="Pre-Paid"
+                        android:textAlignment="textEnd"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/editText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_attach_money_black_24dp"
+                        android:hint="20.0"
+                        android:inputType="textPersonName"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@+id/textView42"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@+id/textView42"
+                        app:layout_constraintTop_toBottomOf="@+id/textView42" />
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnBookNow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_button_state"
+                android:text="@string/text_book_now"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView10" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+</android.support.constraint.ConstraintLayout>

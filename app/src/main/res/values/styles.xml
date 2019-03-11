@@ -44,4 +44,9 @@
         <item name="android:textSize">@dimen/default_text_size</item>
     </style>
 
+    <style name="MySpinnerLook" parent="TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+
 </resources>

@@ -99,71 +99,23 @@
                         android:paddingBottom="@dimen/default_screen_margin"
                         android:scrollbars="vertical">
 
-                        <TextView
-                            android:id="@+id/textView10"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/alike"
-                            android:text="Room Type:"
-                            android:textSize="@dimen/default_text_size"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
                         <RadioGroup
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
-                            android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:orientation="horizontal"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView10"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/textView10"
-                            app:layout_constraintTop_toTopOf="@+id/textView10">
-
-                            <RadioButton
-                                android:id="@+id/radioButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:checked="true"
-                                android:fontFamily="@font/alike"
-                                android:text="single"
-                                style="@style/RadioTheme"
-                                android:textSize="@dimen/default_text_size" />
-
-                            <RadioButton
-                                android:id="@+id/radioButton2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/alike"
-                                android:text="double"
-                                android:textSize="@dimen/default_text_size" />
-
-                            <RadioButton
-                                android:id="@+id/radioButton3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/alike"
-                                android:text="family"
-                                android:textSize="@dimen/default_text_size" />
-                        </RadioGroup>
+                            tools:layout_editor_absoluteY="23dp"/>
 
                         <TextView
-                            android:id="@+id/textView23"
+                            android:id="@+id/tvChooseCheckOutDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
                             android:fontFamily="@font/alike"
                             android:text="Available:"
                             android:textSize="@dimen/default_text_size"
-                            app:layout_constraintEnd_toEndOf="@+id/textView10"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/textView10"
-                            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                            tools:layout_editor_absoluteX="8dp"
+                            tools:layout_editor_absoluteY="62dp" />
 
                         <TextView
                             android:id="@+id/textView24"
@@ -173,10 +125,10 @@
                             android:layout_marginEnd="8dp"
                             android:text="5 rooms left"
                             android:textSize="@dimen/default_text_size"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView23"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvChooseCheckOutDate"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/textView23"
-                            app:layout_constraintTop_toTopOf="@+id/textView23"
+                            app:layout_constraintStart_toEndOf="@+id/tvChooseCheckOutDate"
+                            app:layout_constraintTop_toTopOf="@+id/tvChooseCheckOutDate"
                             app:layout_constraintVertical_bias="0.0" />
 
                         <TextView
@@ -187,10 +139,10 @@
                             android:fontFamily="@font/alike"
                             android:text="Price:"
                             android:textSize="@dimen/default_text_size"
-                            app:layout_constraintEnd_toEndOf="@+id/textView23"
+                            app:layout_constraintEnd_toEndOf="@+id/tvChooseCheckOutDate"
                             app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/textView23"
-                            app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                            app:layout_constraintStart_toStartOf="@+id/tvChooseCheckOutDate"
+                            app:layout_constraintTop_toBottomOf="@+id/tvChooseCheckOutDate" />
 
                         <TextView
                             android:id="@+id/textView26"
@@ -281,6 +233,30 @@
                             app:layout_constraintHorizontal_bias="0"
                             app:layout_constraintStart_toEndOf="@+id/textView11"
                             app:layout_constraintTop_toTopOf="@id/textView11" />
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/alike"
+                            android:text="@string/text_check_in"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/alike"
+                            android:text="TextView"
+                            android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                            app:layout_constraintEnd_toEndOf="@+id/textView10"
+                            app:layout_constraintStart_toStartOf="@+id/textView10"
+                            app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
                     </android.support.constraint.ConstraintLayout>
 
