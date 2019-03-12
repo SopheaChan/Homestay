@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     android:padding="5dp">
 
     <!--<TextView
@@ -115,13 +116,13 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:fontFamily="@font/alike"
+        android:hint="@string/text_password"
         android:inputType="textPassword"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:singleLine="true"
         android:textColor="@color/colorWhite"
         android:textSize="16sp"
-        android:hint="@string/text_password"
         app:layout_constraintEnd_toEndOf="@+id/etOtherContact"
         app:layout_constraintStart_toStartOf="@+id/etOtherContact"
         app:layout_constraintTop_toBottomOf="@+id/etOtherContact" />

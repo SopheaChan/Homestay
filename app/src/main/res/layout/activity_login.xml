@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/ic_login_background_1"
     android:padding="5dp"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     tools:context=".ui.login.LoginActivity">
 
     <TextView

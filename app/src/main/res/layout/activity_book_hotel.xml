@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.book_hotel.BookHotelActivity">
 
     <android.support.v7.widget.CardView
@@ -146,14 +149,27 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:fontFamily="@font/alike"
-                        android:text="2 nights"
+                        android:text="2"
                         android:textAllCaps="true"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/tvChooseCheckInDate"
                         app:layout_constraintEnd_toStartOf="@+id/tvChooseCheckOutDate"
+                        app:layout_constraintHorizontal_bias="0.25"
                         app:layout_constraintStart_toEndOf="@+id/tvChooseCheckInDate"
                         app:layout_constraintTop_toTopOf="@+id/tvChooseCheckInDate"
                         app:layout_constraintVertical_bias="0.3" />
+
+                    <TextView
+                        android:id="@+id/textView32"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/alike"
+                        android:text="nights"
+                        android:textAllCaps="true"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvNumberOfDays"
+                        app:layout_constraintStart_toEndOf="@+id/tvNumberOfDays"
+                        app:layout_constraintTop_toTopOf="@+id/tvNumberOfDays" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
@@ -197,21 +213,6 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
 
-                    <TextView
-                        android:id="@+id/tvNumberOfGuests"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:drawableStart="@drawable/ic_arrow_drop_down_black_24dp"
-                        android:fontFamily="@font/alike"
-                        android:text="2 Guests"
-                        android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/static_spinner"
-                        app:layout_constraintEnd_toStartOf="@+id/editText2"
-                        app:layout_constraintStart_toEndOf="@+id/static_spinner"
-                        app:layout_constraintTop_toTopOf="@+id/static_spinner"
-                        app:layout_constraintVertical_bias="0.0" />
 
                     <Spinner
                         android:id="@+id/static_spinner"
@@ -226,20 +227,70 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
                     <EditText
-                        android:id="@+id/editText2"
+                        android:id="@+id/etRoomQty"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="7dp"
+                        android:layout_marginStart="8dp"
                         android:ems="10"
-                        android:fontFamily="@font/alike"
                         android:hint="1 Room"
                         android:inputType="textPersonName"
                         android:textAlignment="center"
+                        android:textColor="@color/common_google_signin_btn_text_dark_focused"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvNumberOfGuests"
-                        app:layout_constraintEnd_toEndOf="@+id/textView39"
-                        app:layout_constraintTop_toTopOf="@+id/tvNumberOfGuests"
-                        app:layout_constraintVertical_bias="0.428" />
+                        app:layout_constraintBottom_toBottomOf="@+id/btnAddGuest"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/btnAddGuest"
+                        app:layout_constraintTop_toTopOf="@+id/btnAddGuest"
+                        app:layout_constraintVertical_bias="0.59000003" />
+
+                    <TextView
+                        android:id="@+id/tvNumberOfGuest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="5dp"
+                        android:fontFamily="@font/alike"
+                        android:text="0"
+                        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                        app:layout_constraintBottom_toBottomOf="@+id/btnRemoveGuest"
+                        app:layout_constraintStart_toEndOf="@+id/btnRemoveGuest"
+                        app:layout_constraintTop_toTopOf="@+id/btnRemoveGuest"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/btnAddGuest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="5dp"
+                        android:drawableStart="@drawable/ic_add_black_24dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView38"
+                        app:layout_constraintStart_toEndOf="@+id/textView38"
+                        app:layout_constraintTop_toTopOf="@+id/textView38" />
+
+                    <TextView
+                        android:id="@+id/textView38"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/alike"
+                        android:text="GUESTS"
+                        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvNumberOfGuest"
+                        app:layout_constraintStart_toEndOf="@+id/tvNumberOfGuest"
+                        app:layout_constraintTop_toTopOf="@+id/tvNumberOfGuest"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/btnRemoveGuest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="70dp"
+                        android:layout_marginTop="3dp"
+                        android:drawableStart="@drawable/ic_remove_black_24dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/static_spinner"
+                        app:layout_constraintStart_toEndOf="@+id/textView35"
+                        app:layout_constraintTop_toTopOf="@+id/static_spinner"
+                        app:layout_constraintVertical_bias="0.0" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
@@ -261,7 +312,7 @@
                     android:paddingBottom="@dimen/invoice_default_view_padding">
 
                     <TextView
-                        android:id="@+id/textView44"
+                        android:id="@+id/tvHotelName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -275,16 +326,16 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView45"
+                        android:id="@+id/tvHotelAddress"
                         android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/alike"
                         android:text="st. 123AY, Athene, Greece"
                         android:textAlignment="center"
                         android:textSize="12sp"
-                        app:layout_constraintEnd_toEndOf="@+id/textView44"
-                        app:layout_constraintStart_toStartOf="@+id/textView44"
-                        app:layout_constraintTop_toBottomOf="@+id/textView44" />
+                        app:layout_constraintEnd_toEndOf="@+id/tvHotelName"
+                        app:layout_constraintStart_toStartOf="@+id/tvHotelName"
+                        app:layout_constraintTop_toBottomOf="@+id/tvHotelName" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
@@ -319,7 +370,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tvGuestName"
+                        android:id="@+id/tvClientName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -347,18 +398,49 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/editText"
-                        android:layout_width="0dp"
+                        android:id="@+id/etDepositeAmount"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:drawableStart="@drawable/ic_attach_money_black_24dp"
                         android:hint="20.0"
                         android:inputType="textPersonName"
                         android:textAlignment="center"
                         android:textSize="14sp"
-                        app:layout_constraintEnd_toEndOf="@+id/textView42"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="@+id/textView42"
-                        app:layout_constraintTop_toBottomOf="@+id/textView42" />
+                        app:layout_constraintBottom_toBottomOf="@+id/tvTotalAmount1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.89"
+                        app:layout_constraintStart_toEndOf="@+id/tvTotalAmount1"
+                        app:layout_constraintTop_toTopOf="@+id/tvTotalAmount1" />
+
+                    <TextView
+                        android:id="@+id/textView47"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/alike"
+                        android:text="Total"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView40"
+                        app:layout_constraintEnd_toStartOf="@+id/textView42"
+                        app:layout_constraintStart_toEndOf="@+id/textView40"
+                        app:layout_constraintTop_toTopOf="@+id/textView40" />
+
+                    <TextView
+                        android:id="@+id/tvTotalAmount1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:drawableStart="@drawable/ic_attach_money_black_24dp"
+                        android:fontFamily="@font/alike"
+                        android:text="20"
+                        android:textAllCaps="true"
+                        app:layout_constraintEnd_toEndOf="@+id/textView47"
+                        app:layout_constraintStart_toStartOf="@+id/textView47"
+                        app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>

@@ -85,29 +85,7 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
         btnViewHotelLocation.setOnClickListener(this)
         btnViewHotelDescription.setOnClickListener(this)
         btnBookHotel.setOnClickListener(this)
-//        setAnimationToView()
     }
-
-    //set animation to tvDetailRoomPrice
-   /* private fun setAnimationToView() {
-        val animation = AnimationUtils.loadAnimation(this@HotelDetailActivity, R.anim.view_anim)
-        tvDetailRoomPrice.animation = animation
-        animation.duration = 5000
-        animation.setAnimationListener(object : Animation.AnimationListener{
-            override fun onAnimationRepeat(animation: Animation?) {
-
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
-                setAnimationToView()
-            }
-
-            override fun onAnimationStart(animation: Animation?) {
-
-            }
-
-        })
-    }*/
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
@@ -145,7 +123,10 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
                 customDialog.displayDialog(R.layout.dialog_view_hotel_description, R.style.DialogTheme)
             }
             R.id.btnBookHotel -> {
-                startActivity(Intent(this, BookHotelActivity::class.java))
+                val intent = Intent(this, BookHotelActivity::class.java)
+                intent.putExtra("hotel_name", hotelName)
+                intent.putExtra("hotel_address", hotelAddress)
+                startActivity(intent)
             }
         }
     }

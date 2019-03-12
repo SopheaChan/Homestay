@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     android:padding="5dp">
 
     <EditText
@@ -64,40 +66,88 @@
         app:layout_constraintStart_toStartOf="@+id/etSex"
         app:layout_constraintTop_toBottomOf="@+id/etSex" />
 
-    <EditText
-        android:id="@+id/etAddress"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:fontFamily="@font/alike"
-        android:hint="@string/text_address"
-        android:inputType="text"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:singleLine="true"
-        android:textColor="@color/colorWhite"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/etSex"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/etSex"
-        app:layout_constraintTop_toBottomOf="@+id/etAge" />
-
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btnNext"
-        android:layout_width="wrap_content"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/alike"
         android:text="@string/text_button_next"
         android:textAlignment="textEnd"
         android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="@+id/etAddress"
-        app:layout_constraintStart_toStartOf="@+id/etAddress"
-        app:layout_constraintTop_toBottomOf="@+id/etAddress" />
+        app:layout_constraintEnd_toStartOf="@+id/etVillage"
+        app:layout_constraintStart_toStartOf="@+id/etProvince"
+        app:layout_constraintTop_toBottomOf="@+id/etDistrict" />
 
+    <EditText
+        android:id="@+id/etCountry"
+        android:layout_width="81dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:fontFamily="@font/alike"
+        android:hint="Country"
+        android:textColor="@color/colorWhite"
+        android:inputType="textPersonName"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/etAge"
+        app:layout_constraintTop_toBottomOf="@+id/etAge" />
+
+    <EditText
+        android:id="@+id/etProvince"
+        android:layout_width="81dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ems="10"
+        android:fontFamily="@font/alike"
+        android:hint="Province"
+        android:textColor="@color/colorWhite"
+        android:inputType="textPersonName"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/etCountry"
+        app:layout_constraintStart_toEndOf="@+id/etCountry"
+        app:layout_constraintTop_toTopOf="@+id/etCountry" />
+
+    <EditText
+        android:id="@+id/etDistrict"
+        android:layout_width="81dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ems="10"
+        android:fontFamily="@font/alike"
+        android:hint="District"
+        android:textColor="@color/colorWhite"
+        android:inputType="textPersonName"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/etProvince"
+        app:layout_constraintStart_toEndOf="@+id/etProvince"
+        app:layout_constraintTop_toTopOf="@+id/etProvince" />
+
+    <EditText
+        android:id="@+id/etVillage"
+        android:layout_width="81dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ems="10"
+        android:fontFamily="@font/alike"
+        android:hint="Village"
+        android:inputType="textPersonName"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textSize="16sp"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="@+id/etDistrict"
+        app:layout_constraintStart_toEndOf="@+id/etDistrict"
+        app:layout_constraintTop_toTopOf="@+id/etDistrict" />
     <!--<TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"

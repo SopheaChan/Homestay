@@ -31,7 +31,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         when (buttonID) {
             R.id.btnLogin -> {
                 loginMvpPresenter.setButtonLoginListener(etEmail, etPassword, dialogLoadingProgress)
-                dialogLoadingProgress.displayLoadingProgressRecursive("Signing in...")
             }
             R.id.btnSignUp -> {
                 loginMvpPresenter.setButtonSignUpListener() }

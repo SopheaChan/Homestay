@@ -109,11 +109,9 @@ class HomePresenter : HomeMvpPresenter {
     override fun onSignOut(context: Activity, dialog: DialogDisplayLoadingProgress) {
         mAuth.signOut()
         mAuth.addAuthStateListener {
-            FirebaseAuth.AuthStateListener {
-                context.baseContext.startActivity(Intent(context, LoginActivity::class.java))
-                context.finish()
-                dialog.getDialog().dismiss()
-            }
+            context.startActivity(Intent(context, LoginActivity::class.java))
+            context.finish()
+            dialog.getDialog().dismiss()
         }
     }
 

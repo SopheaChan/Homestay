@@ -31,6 +31,7 @@ class LoginPresenter(private val context: Activity) : LoginMvpPresenter {
             }
             return
         } else {
+            dialogDisplayLoadingProgress.displayLoadingProgressRecursive("Signing in...")
             mFirebaseAuth = FirebaseAuth.getInstance()
             mFirebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener{
@@ -39,10 +40,12 @@ class LoginPresenter(private val context: Activity) : LoginMvpPresenter {
                         context.finish()
                         dialogDisplayLoadingProgress.getDialog().dismiss()
                     } else{
+                        dialogDisplayLoadingProgress.getDialog().dismiss()
                         Toast.makeText(context, "Failed signing in...", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener{
+                    dialogDisplayLoadingProgress.getDialog().dismiss()
                     Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
                 }
         }
