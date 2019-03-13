@@ -70,16 +70,4 @@
         <item>Double Room</item>
         <item>Family Room</item>
     </string-array>
-
-    <string-array name="array_room_quantity">
-        <item>1 Room</item>
-        <item>2 Room</item>
-        <item>3 Room</item>
-        <item>4 Room</item>
-        <item>5 Room</item>
-        <item>6 Room</item>
-        <item>7 Room</item>
-        <item>8 Room</item>
-        <item>9 Room</item>
-    </string-array>
 </resources>

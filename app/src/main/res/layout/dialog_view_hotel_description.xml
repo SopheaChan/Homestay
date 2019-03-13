@@ -12,12 +12,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:scaleType="fitXY"
-        app:layout_constraintStart_toStartOf="@+id/tvHotelName"
-        app:layout_constraintTop_toBottomOf="@+id/tvHotelName"
+        app:layout_constraintStart_toStartOf="@+id/tvHotelNameBookingList"
+        app:layout_constraintTop_toBottomOf="@+id/tvHotelNameBookingList"
         app:srcCompat="@drawable/ic_hotel_description_sample" />
 
     <TextView
-        android:id="@+id/tvHotelName"
+        android:id="@+id/tvHotelNameBookingList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_home_recycler_row_text"

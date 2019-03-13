@@ -28,10 +28,7 @@ class ImageSlideshowAdapter constructor(private val context: Context, private va
         layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view: View = layoutInflater.inflate(R.layout.layout_image_for_view_detail, container, false)
         val img: ImageView = view.findViewById(R.id.imageView)
-//        img.setImageResource(images[position])
-        //Set image to imageView using Glide, since Glide is faster than Picasso
         Glide.with(context).load(Uri.parse(images[position])).into(img)
-        //Add eventClickListener to each image
         img.setOnClickListener {
             Snackbar.make(img, "Images: " + (position + 1).toString(), 1000).show()
         }

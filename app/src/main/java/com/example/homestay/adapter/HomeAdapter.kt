@@ -10,7 +10,6 @@ import android.widget.*
 import com.bumptech.glide.Glide
 import com.example.homestay.R
 import com.example.homestay.model.HotelData
-import java.util.*
 
 
 open class HomeAdapter(
@@ -50,7 +49,7 @@ open class HomeAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgHotelImage: ImageView = view.findViewById(R.id.imgHotelPicture)
-        val tvHotelName: TextView = view.findViewById(R.id.tvHotelName)
+        val tvHotelName: TextView = view.findViewById(R.id.tvHotelNameBookingList)
         val tvHotelAddress: TextView = view.findViewById(R.id.tvHotelAddress)
         val ratingBar: RatingBar = view.findViewById(com.example.homestay.R.id.ratingBar)
     }

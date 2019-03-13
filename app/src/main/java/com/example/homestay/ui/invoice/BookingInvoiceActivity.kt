@@ -19,6 +19,6 @@ class BookingInvoiceActivity : AppCompatActivity() {
     private fun loadBookingInfo() {
         bookingInvoiceMvpPresenter.getBookingDetail(tvCheckInDate, tvCheckOutData, tvCheckInTime, tvCheckOutTime,
             tvRoomType, tvInvoiceRoomQty, tvInvoiceNumOfGuests, tvGuestName, tvTotalAmount, tvPrePaidAmount,
-            tvInvoiceNumOfDays, tvHotelName, tvHotelLocation, tvIssuedDate)
+            tvInvoiceNumOfDaysBookingList, tvHotelNameBookingList, tvHotelLocation, tvIssuedDate)
     }
 }

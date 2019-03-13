@@ -23,6 +23,7 @@ import com.example.homestay.model.HotelData
 import com.example.homestay.model.User
 import com.example.homestay.ui.login.LoginActivity
 import com.example.homestay.ui.view_detail.HotelDetailActivity
+import com.example.homestay.utils.StoreCurrentUserInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -101,6 +102,7 @@ class HomePresenter : HomeMvpPresenter {
                 tvUserName.text = user?.userBasicInfo?.name ?: "N/A"
                 tvEmail.text = user?.userContact?.email ?: "N/A"
                 Glide.with(context.baseContext).load(user?.uProfile).into(imgProfile)
+                StoreCurrentUserInfo.setUser(user!!)
             }
 
         })

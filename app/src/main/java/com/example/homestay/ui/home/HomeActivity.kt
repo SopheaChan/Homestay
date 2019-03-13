@@ -41,6 +41,7 @@ import com.example.homestay.custom.DialogMenu
 import com.example.homestay.listener.OnDialogMenuClickListener
 import com.example.homestay.model.FavoriteList
 import com.example.homestay.model.HotelData
+import com.example.homestay.ui.maps.MapsActivity
 import com.example.homestay.ui.profile.ProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
@@ -119,7 +120,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         etSearchHotel.addTextChangedListener(this)
         homePresenter.onLoadUser(tvUserName, tvUserEmail, imgUserProfile, this)
         customDialog = CustomDialog(this@HomeActivity)
-//        setAnimationToTitle(tvTitle)
     }
 
     private fun onUserProfileClicked() {
@@ -204,7 +204,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
             R.id.menu_nearby_hotel -> {
-                dialogDisplayLoadingProgress.displayLoadingProgressRecursive("Loading nearby hotel...")
+                val intent = Intent(this@HomeActivity, MapsActivity::class.java)
+                startActivity(intent)
             }
             else -> return false
         }
@@ -262,7 +263,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             override fun onAnimationEnd(animation: Animation?) {
                 setTitleAnimationIn(tvTitle)
-//                setAnimationToTitle(tvTitle)
             }
 
             override fun onAnimationStart(animation: Animation?) {
@@ -293,9 +293,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_location -> {
-
-            }
             R.id.nav_sign_out -> {
                 dialogDisplayLoadingProgress.displayLoadingProgressRecursive("Signing out...")
                 homePresenter.onSignOut(this, dialogDisplayLoadingProgress)

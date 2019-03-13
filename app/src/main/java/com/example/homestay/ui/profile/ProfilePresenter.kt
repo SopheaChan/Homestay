@@ -11,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.example.homestay.model.User
 import com.example.homestay.model.UserBasicInfo
 import com.example.homestay.model.UserContact
+import com.example.homestay.utils.StoreCurrentUserInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -36,14 +37,8 @@ class ProfilePresenter(private val context: Activity) : ProfileMvpPresenter {
         tvGender: TextView, tvPhone: TextView, tvEmail: TextView,
         tvCountry: TextView, tvState: TextView, tvTown: TextView, tvVillage: TextView,
         imageBackground: ImageView) {
-        val userID = firebaseUser.uid
-        databaseRef.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
 
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: User? = dataSnapshot.getValue(User::class.java)
+            val user: User? = StoreCurrentUserInfo.getUser()
                 val userProfile = user?.uProfile
                 val userInfo: UserBasicInfo? = user?.userBasicInfo
                 val userContact: UserContact? = user?.userContact
@@ -60,8 +55,5 @@ class ProfilePresenter(private val context: Activity) : ProfileMvpPresenter {
                 tvState.text = userAddress?.get(1)
                 tvTown.text = userAddress?.get(2)
                 tvVillage.text = userAddress?.get(3)
-            }
-
-        })
     }
 }
