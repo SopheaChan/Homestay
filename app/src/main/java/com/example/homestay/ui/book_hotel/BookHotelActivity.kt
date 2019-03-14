@@ -53,7 +53,7 @@ class BookHotelActivity : AppCompatActivity(), View.OnClickListener {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        overridePendingTransition(R.anim.anim_sliding_in_right, R.anim.anim_sliding_out_left)
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -316,5 +316,10 @@ class BookHotelActivity : AppCompatActivity(), View.OnClickListener {
             mMinute, false
         )
         timePickerDialog.show()
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.anim_sliding_in_left, R.anim.anim_sliding_out_right)
     }
 }

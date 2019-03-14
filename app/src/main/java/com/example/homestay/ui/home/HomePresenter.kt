@@ -7,8 +7,8 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -18,11 +18,12 @@ import com.example.homestay.adapter.FavoriteHotelAdapter
 import com.example.homestay.adapter.HomeAdapter
 import com.example.homestay.custom.CustomDialog
 import com.example.homestay.custom.DialogDisplayLoadingProgress
+import com.example.homestay.model.BookingInfo
 import com.example.homestay.model.FavoriteList
 import com.example.homestay.model.HotelData
 import com.example.homestay.model.User
 import com.example.homestay.ui.login.LoginActivity
-import com.example.homestay.ui.view_detail.HotelDetailActivity
+import com.example.homestay.ui.hotel_detail.HotelDetailActivity
 import com.example.homestay.utils.StoreCurrentUserInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -88,11 +89,12 @@ class HomePresenter : HomeMvpPresenter {
             imageView, imageView.transitionName
         )
         context.startActivity(intent, options.toBundle())
+//        context.startActivity(intent)
     }
 
     override fun onLoadUser(tvUserName: TextView, tvEmail: TextView, imgProfile: CircleImageView, context: Activity) {
         mDatabaseRef = mFirebaseDb.getReference("profile").child(mUserID)
-        mDatabaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        mDatabaseRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
@@ -103,6 +105,48 @@ class HomePresenter : HomeMvpPresenter {
                 tvEmail.text = user?.userContact?.email ?: "N/A"
                 Glide.with(context.baseContext).load(user?.uProfile).into(imgProfile)
                 StoreCurrentUserInfo.setUser(user!!)
+            }
+
+        })
+    }
+
+    override fun onLoadBookingInfo() {
+        val bookingRecord: ArrayList<BookingInfo> = arrayListOf()
+        mDatabaseRef = mFirebaseDb.getReference("booking").child(mUserID)
+        mDatabaseRef.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                /*TODO("not implemented") //To change body of created functions use File | Settings | File Templates.*/
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                val item = p0.children
+                item.forEach{
+                    val bookingInfo: BookingInfo ?= it.getValue(BookingInfo::class.java)
+                    bookingRecord.add(bookingInfo!!)
+                }
+
+                StoreCurrentUserInfo.setBookingInfo(bookingRecord)
+            }
+
+        })
+    }
+
+    override fun onLoadFavoriteList() {
+        val listFavoriteHotel: ArrayList<FavoriteList?> = ArrayList()
+        mDatabaseRef = mFirebaseDb.getReference("favorite").child(mUserID)
+        mDatabaseRef.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                listFavoriteHotel.clear()
+                val children = dataSnapshot.children
+                children.forEach {
+                    val favoriteList = it.getValue(FavoriteList::class.java)
+                    listFavoriteHotel.add(favoriteList!!)
+                }
+                StoreCurrentUserInfo.setFavoriteList(listFavoriteHotel)
             }
 
         })
@@ -154,72 +198,36 @@ class HomePresenter : HomeMvpPresenter {
         animationIn.duration = 1000
         imgImageView.animation = animationIn
         btnDone.animation = animationIn
-        mDatabaseRef = mFirebaseDb.getReference("profile").child(mUserID)
-        mDatabaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
 
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: User? = dataSnapshot.getValue(User::class.java)
-                Glide.with(context.baseContext).load(user?.uProfile).into(imgImageView)
-                btnDone.setOnClickListener {
-//                    val animationOut = AnimationUtils.loadAnimation(context, R.anim.fade_out)
-//                    animationOut.duration = 500
-//                    imgImageView.animation = animationOut
-//                    btnDone.animation = animationOut
-                    dialog.getDialog().dismiss()
-                }
-            }
-
-        })
+        Glide.with(context.baseContext).load(StoreCurrentUserInfo.getUser().uProfile).into(imgImageView)
+        btnDone.setOnClickListener {
+            dialog.getDialog().dismiss()
+        }
     }
 
     override fun onViewFavoriteList(context: Activity, layoutID: Int, layoutStyle: Int, customDialog: CustomDialog) {
-        customDialog.displayDialog(R.layout.dialog_favorite_list, R.style.DialogBookHotelTheme)
-        val listFavoriteHotel: ArrayList<FavoriteList?> = ArrayList()
+        customDialog.displayDialog(layoutID, layoutStyle)
+        val listFavoriteHotel: ArrayList<FavoriteList?> = StoreCurrentUserInfo.getFavoriteList()
         val adapter = FavoriteHotelAdapter(listFavoriteHotel, context)
-        val mutableList: MutableList<FavoriteList?> = mutableListOf()
         val recyclerView: RecyclerView = customDialog.getDialog().findViewById(R.id.recyclerview_favorite_hotel)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.hasFixedSize()
         recyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
-
-        mDatabaseRef = mFirebaseDb.getReference("favorite")
-            .child(mUserID)
-        mDatabaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val children = dataSnapshot.children
-                children.forEach {
-                    val favoriteList = it.getValue(FavoriteList::class.java)
-                    mutableList.add(favoriteList)
-                    listFavoriteHotel.add(favoriteList)
-                }
-                adapter.notifyDataSetChanged()
-            }
-
-        })
-
         adapter.onRemoveFromListClicklistener{favoriteList, arrayList ->
-            removeFromFavoriteList(favoriteList, arrayList, mDatabaseRef, context, adapter)
+            removeFromFavoriteList(favoriteList, arrayList, context, adapter)
         }
     }
 
     private fun removeFromFavoriteList(
         favoriteHotel: FavoriteList?,
         listFavoriteHotel: ArrayList<FavoriteList?>,
-        databaseReference: DatabaseReference,
         context: Activity,
         adapter: FavoriteHotelAdapter
     ) {
         val issueDate = favoriteHotel?.issueDate!!
-        databaseReference.child(issueDate)
-            .removeValue().addOnCompleteListener {
+        val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("favorite").child(mUserID).child(issueDate)
+        databaseReference.removeValue().addOnCompleteListener {
                 if (it.isSuccessful) {
                     listFavoriteHotel.remove(favoriteHotel)
                     adapter.notifyDataSetChanged()

@@ -45,11 +45,11 @@ import org.json.JSONObject
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener, GoogleMap.OnMapClickListener{
 
     private lateinit var mMap: GoogleMap
-    private val REQUEST_LOCATION = 5
+    private val REQUEST_LOCATION = 6
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        overridePendingTransition(R.anim.anim_sliding_in_right, R.anim.anim_sliding_out_left)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_maps)
@@ -207,12 +207,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener, 
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))*/
     }
 
-    private fun findNearbyHotel(mCurrentLocation: LatLng) {
-        btnNearbyHotel.setOnClickListener{
-            volleyRequest(mCurrentLocation)
-        }
-    }
-
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
 
     }
@@ -223,5 +217,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener, 
 
     override fun onProviderDisabled(provider: String?) {
 
+    }
+
+    private fun findNearbyHotel(mCurrentLocation: LatLng) {
+        btnNearbyHotel.setOnClickListener{
+            volleyRequest(mCurrentLocation)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopLocationUpdates()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+    }
+
+    private fun stopLocationUpdates() {
+        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as (LocationManager)
+        locationManager.removeUpdates(this)
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.anim_sliding_in_left, R.anim.anim_sliding_out_right)
     }
 }

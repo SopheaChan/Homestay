@@ -6,8 +6,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorAccent</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
         <!--<item name="android:navigationBarColor">@color/colorPrimary</item>-->
         <!--<item name="android:windowLightNavigationBar">true</item>-->
+    </style>
+
+    <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/anim_sliding_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/anim_sliding_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/anim_sliding_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/anim_sliding_out_right</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -38,6 +46,13 @@
     <style name="DialogBookHotelTheme" parent="Theme.AppCompat.Light.Dialog">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/bg_dialog_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <style name="DialogFavoriteHotelTheme" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@drawable/bg_dialog_favorite_hotel_background_theme</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>
     </style>

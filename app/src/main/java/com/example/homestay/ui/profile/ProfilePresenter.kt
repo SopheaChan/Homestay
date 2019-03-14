@@ -44,7 +44,7 @@ class ProfilePresenter(private val context: Activity) : ProfileMvpPresenter {
                 val userContact: UserContact? = user?.userContact
                 val userAddress: List<String> ?= userInfo?.address?.split(",")
                 Glide.with(context.baseContext).load(userProfile).into(profileImage)
-                Glide.with(context.baseContext).load(userProfile).override(18, 18)  //just set override like this
+                Glide.with(context.baseContext).load(userProfile).override(30, 30)  //just set override like this
                     .into(imageBackground)
                 tvName.text = userInfo?.name
                 tvAge.text = userInfo?.age

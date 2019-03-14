@@ -1,22 +1,14 @@
-package com.example.homestay.ui.view_detail
+package com.example.homestay.ui.hotel_detail
 
-import android.app.Dialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.*
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.TextView
 import com.example.homestay.R
-import com.example.homestay.adapter.ImageSlideshowAdapter
 import com.example.homestay.custom.CustomDialog
 import com.example.homestay.ui.maps.MapsActivity
 import kotlinx.android.synthetic.main.activity_hotel_detail.*
-import java.util.*
 import kotlin.collections.ArrayList
-import com.example.homestay.R.layout.dialog_book_hotel
 import com.example.homestay.custom.ImageSlider
 import com.example.homestay.ui.book_hotel.BookHotelActivity
 
@@ -75,7 +67,7 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
                 if (title == "Mark as favorite") {
                     item.setIcon(R.drawable.ic_favorite_border_light_pink_24dp)
                     item.title = "Added to favorite"
-                    hotelDetailMvpPresenter.addToFavorite(this, hotelName, hotelAddress)
+                    hotelDetailMvpPresenter.addToFavorite(this, hotelName, hotelAddress, listImage[0])
                 } else if (title == "Added to favorite") {
                     item.setIcon(R.drawable.ic_menu_favorite_white)
                     item.title = "Mark as favorite"
@@ -101,5 +93,10 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 }

@@ -7,19 +7,19 @@
     android:layout_marginTop="5dp">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardView17"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         app:cardCornerRadius="2dp"
-        app:cardElevation="8dp"
+        app:cardElevation="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <android.support.constraint.ConstraintLayout
@@ -29,7 +29,7 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView7"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="92dp"
                 android:elevation="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/tvCheckInDate"
+                            android:id="@+id/tvBookingRecordCheckInDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -77,17 +77,17 @@
                             app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
                         <TextView
-                            android:id="@+id/tvCheckInTimeBookingList"
+                            android:id="@+id/tvBookingRecordCheckInTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/alike"
                             android:text="12:56 PM"
                             android:textAllCaps="true"
                             android:textSize="12sp"
-                            app:layout_constraintEnd_toEndOf="@+id/tvCheckInDate"
+                            app:layout_constraintEnd_toEndOf="@+id/tvBookingRecordCheckInDate"
                             app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/tvCheckInDate"
-                            app:layout_constraintTop_toBottomOf="@+id/tvCheckInDate" />
+                            app:layout_constraintStart_toStartOf="@+id/tvBookingRecordCheckInDate"
+                            app:layout_constraintTop_toBottomOf="@+id/tvBookingRecordCheckInDate" />
 
                     </android.support.constraint.ConstraintLayout>
 
@@ -100,7 +100,7 @@
                         app:layout_constraintTop_toTopOf="@+id/constraintLayout3">
 
                         <TextView
-                            android:id="@+id/tvInvoiceNumOfDaysBookingList"
+                            android:id="@+id/tvBookingRecordNumOfDays"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -121,9 +121,9 @@
                             android:fontFamily="@font/alike"
                             android:text="nights"
                             android:textAllCaps="true"
-                            app:layout_constraintBottom_toBottomOf="@+id/tvInvoiceNumOfDaysBookingList"
-                            app:layout_constraintStart_toEndOf="@id/tvInvoiceNumOfDaysBookingList"
-                            app:layout_constraintTop_toTopOf="@+id/tvInvoiceNumOfDaysBookingList" />
+                            app:layout_constraintBottom_toBottomOf="@+id/tvBookingRecordNumOfDays"
+                            app:layout_constraintStart_toEndOf="@id/tvBookingRecordNumOfDays"
+                            app:layout_constraintTop_toTopOf="@+id/tvBookingRecordNumOfDays" />
                     </android.support.constraint.ConstraintLayout>
 
                     <android.support.constraint.ConstraintLayout
@@ -147,7 +147,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/tvCheckOutData"
+                            android:id="@+id/tvBookingRecordCheckOutData"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -157,21 +157,21 @@
                             android:textColor="@color/common_google_signin_btn_text_dark_focused"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="@+id/textView31"
-                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toStartOf="@+id/textView31"
                             app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
                         <TextView
-                            android:id="@+id/tvCheckOutTimeBookingList"
+                            android:id="@+id/tvBookingRecordCheckOutTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12:56 PM"
                             android:textAllCaps="true"
                             android:textSize="12sp"
-                            app:layout_constraintEnd_toEndOf="@+id/tvCheckOutData"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/tvCheckOutData"
-                            app:layout_constraintTop_toBottomOf="@+id/tvCheckOutData" />
+                            app:layout_constraintEnd_toEndOf="@+id/tvBookingRecordCheckOutData"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="@+id/tvBookingRecordCheckOutData"
+                            app:layout_constraintTop_toBottomOf="@+id/tvBookingRecordCheckOutData" />
                     </android.support.constraint.ConstraintLayout>
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
@@ -179,7 +179,7 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView8"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="92dp"
                 android:layout_marginTop="3dp"
                 android:elevation="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -202,7 +202,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
-                            android:id="@+id/tvRoomType"
+                            android:id="@+id/tvBookingRecordRoomType"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
@@ -224,7 +224,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
-                            android:id="@+id/tvInvoiceRoomQty"
+                            android:id="@+id/tvBookingRecordRoomQty"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
@@ -236,7 +236,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/tvInvoiceNumOfGuests"
+                            android:id="@+id/tvBookingRecordNumOfGuests"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/alike"
@@ -244,22 +244,22 @@
                             android:textAllCaps="true"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/tvInvoiceRoomQty"
+                            app:layout_constraintEnd_toEndOf="@+id/tvBookingRecordRoomQty"
                             app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/tvInvoiceRoomQty"
-                            app:layout_constraintTop_toBottomOf="@+id/tvInvoiceRoomQty" />
+                            app:layout_constraintStart_toStartOf="@+id/tvBookingRecordRoomQty"
+                            app:layout_constraintTop_toBottomOf="@+id/tvBookingRecordRoomQty" />
 
                         <TextView
                             android:id="@+id/textView37"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
-                            android:layout_marginEnd="40dp"
+                            android:layout_marginEnd="32dp"
                             android:fontFamily="@font/alike"
                             android:text="Rooms"
                             android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="@id/tvInvoiceRoomQty"
+                            app:layout_constraintBottom_toBottomOf="@id/tvBookingRecordRoomQty"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/tvInvoiceRoomQty" />
+                            app:layout_constraintTop_toTopOf="@id/tvBookingRecordRoomQty" />
 
                         <TextView
                             android:id="@+id/textView43"
@@ -269,9 +269,9 @@
                             android:fontFamily="@font/alike"
                             android:text="Guests"
                             android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="@id/tvInvoiceNumOfGuests"
-                            app:layout_constraintStart_toEndOf="@id/tvInvoiceNumOfGuests"
-                            app:layout_constraintTop_toTopOf="@id/tvInvoiceNumOfGuests" />
+                            app:layout_constraintBottom_toBottomOf="@id/tvBookingRecordNumOfGuests"
+                            app:layout_constraintStart_toEndOf="@id/tvBookingRecordNumOfGuests"
+                            app:layout_constraintTop_toTopOf="@id/tvBookingRecordNumOfGuests" />
 
                     </android.support.constraint.ConstraintLayout>
                 </android.support.constraint.ConstraintLayout>
@@ -280,7 +280,7 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView9"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="92dp"
                 android:layout_marginTop="3dp"
                 android:elevation="3dp"
                 app:layout_constraintEnd_toEndOf="@+id/cardView8"
@@ -295,7 +295,7 @@
                     android:paddingBottom="@dimen/invoice_default_view_padding">
 
                     <TextView
-                        android:id="@+id/tvHotelNameBookingList"
+                        android:id="@+id/tvBookingRecordHotelName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/alike"
@@ -307,23 +307,24 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tvHotelLocationBookingList"
+                        android:id="@+id/tvBookingRecordHotelLocation"
                         android:layout_width="170dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:fontFamily="@font/alike"
                         android:text="st. 123AY, Athene, Greece"
                         android:textAlignment="center"
                         android:textSize="12sp"
-                        app:layout_constraintEnd_toEndOf="@+id/tvHotelNameBookingList"
-                        app:layout_constraintStart_toStartOf="@+id/tvHotelNameBookingList"
-                        app:layout_constraintTop_toBottomOf="@+id/tvHotelNameBookingList" />
+                        app:layout_constraintEnd_toEndOf="@+id/tvBookingRecordHotelName"
+                        app:layout_constraintStart_toStartOf="@+id/tvBookingRecordHotelName"
+                        app:layout_constraintTop_toBottomOf="@+id/tvBookingRecordHotelName" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView10"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="92dp"
                 android:layout_marginTop="3dp"
                 android:elevation="3dp"
                 app:layout_constraintEnd_toEndOf="@+id/cardView9"
@@ -341,7 +342,7 @@
                         android:id="@+id/textView40"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="32dp"
                         android:fontFamily="@font/alike"
                         android:text="GUEST"
                         android:textAlignment="viewStart"
@@ -351,7 +352,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tvGuestNameBookingList"
+                        android:id="@+id/tvBookingRecordGuestName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -369,7 +370,7 @@
                         android:id="@+id/textView42"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="32dp"
                         android:fontFamily="@font/alike"
                         android:text="PAID"
                         android:textAlignment="textEnd"
@@ -379,7 +380,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tvPrePaidAmountBingList"
+                        android:id="@+id/tvBookingRecordPrePaidAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -410,7 +411,7 @@
                         app:layout_constraintTop_toTopOf="@+id/textView40" />
 
                     <TextView
-                        android:id="@+id/tvTotalAmountBookingList"
+                        android:id="@+id/tvBookingRecordTotalAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -425,64 +426,10 @@
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:elevation="3dp"
-                app:layout_constraintEnd_toEndOf="@+id/cardView10"
-                app:layout_constraintStart_toStartOf="@+id/cardView10"
-                app:layout_constraintTop_toBottomOf="@+id/cardView10">
-
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_invoice_viewgroup_border">
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout2"
-                        android:layout_width="188dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_invoice_button_outline"
-                        android:orientation="horizontal"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/btnCall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:src="@drawable/ic_phone_24dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="188dp"
-                        android:layout_height="0dp"
-                        android:background="@drawable/bg_invoice_button_outline"
-                        android:orientation="horizontal"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/linearLayout2">
-
-                        <ImageView
-                            android:id="@+id/btnViewHotelOnMaps"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:src="@drawable/ic_location_24dp" />
-                    </LinearLayout>
-                </android.support.constraint.ConstraintLayout>
-            </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="56dp"
+                android:layout_height="75dp"
                 android:layout_marginTop="3dp"
                 android:elevation="3dp"
                 app:layout_constraintEnd_toEndOf="@+id/cardView10"
@@ -492,13 +439,15 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_invoice_viewgroup_border">
+                    android:background="@drawable/bg_invoice_viewgroup_border"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="16dp">
 
                     <TextView
                         android:id="@+id/textView34"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:fontFamily="@font/alike"
@@ -510,7 +459,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tvIssuedDateBookingList"
+                        android:id="@+id/tvBookingRecordIssuedDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -520,6 +469,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/textView34"
                         app:layout_constraintStart_toStartOf="@+id/textView34"
                         app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 

@@ -22,4 +22,6 @@ interface HomeMvpPresenter {
     fun onUploadPhoto(context: Activity, newImage: Uri, dialogLoadingProgress: DialogDisplayLoadingProgress)
     fun onViewProfilePicture(imgImageView: ImageView, btnDone: AppCompatButton, context: Activity, dialog: CustomDialog)
     fun onViewFavoriteList(context: Activity, layoutID: Int, layoutStyle: Int, customDialog: CustomDialog)
+    fun onLoadBookingInfo()
+    fun onLoadFavoriteList()
 }

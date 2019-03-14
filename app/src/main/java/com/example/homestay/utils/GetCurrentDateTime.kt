@@ -23,7 +23,15 @@ object GetCurrentDateTime {
     @RequiresApi(Build.VERSION_CODES.N)
     fun getCurrentTimeUsingDate(): String{
         val date = Date()
-        val strDateFormat = "dd-MM-yyyy hh:mm a"
+        val strDateFormat = "dd-MMM-yyyy hh:mm a"
+        val dateFormat = SimpleDateFormat(strDateFormat)
+        return dateFormat.format(date)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun getAddedToFavoriteListOnDate(): String{
+        val date = Date()
+        val strDateFormat = "dd-MMM-yyyy hh:mm:ss a"
         val dateFormat = SimpleDateFormat(strDateFormat)
         return dateFormat.format(date)
     }

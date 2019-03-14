@@ -1,4 +1,4 @@
-package com.example.homestay.ui.view_detail
+package com.example.homestay.ui.hotel_detail
 
 import android.app.Activity
 import android.os.Build
@@ -13,11 +13,11 @@ import com.google.firebase.database.*
 class HotelDetailPresenter : HotelDetailMvpPresenter{
 
     @RequiresApi(Build.VERSION_CODES.N)
-    override fun addToFavorite(context: Activity, hotelName: String, hotelAddress: String) {
+    override fun addToFavorite(context: Activity, hotelName: String, hotelAddress: String, imageUrl: String) {
         val firebaseUser: FirebaseUser ?= FirebaseAuth.getInstance().currentUser
         val userID: String = firebaseUser!!.uid
-        val issueDate: String = GetCurrentDateTime.getCurrentTimeUsingDate() ?: "default date"
-        val favoriteList = FavoriteList(hotelName, hotelAddress, issueDate)
+        val issueDate: String = GetCurrentDateTime.getAddedToFavoriteListOnDate() ?: "N/A"
+        val favoriteList = FavoriteList(hotelName, hotelAddress, issueDate, imageUrl)
         val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("favorite")
             .child(userID)
             .child(issueDate)

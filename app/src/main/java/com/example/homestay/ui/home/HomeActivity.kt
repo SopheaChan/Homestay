@@ -41,8 +41,11 @@ import com.example.homestay.custom.DialogMenu
 import com.example.homestay.listener.OnDialogMenuClickListener
 import com.example.homestay.model.FavoriteList
 import com.example.homestay.model.HotelData
+import com.example.homestay.ui.booking_record.BookingRecord
 import com.example.homestay.ui.maps.MapsActivity
 import com.example.homestay.ui.profile.ProfileActivity
+import com.example.homestay.utils.LocationPermission
+import com.example.homestay.utils.StoreCurrentUserInfo
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_home.*
@@ -120,6 +123,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         etSearchHotel.addTextChangedListener(this)
         homePresenter.onLoadUser(tvUserName, tvUserEmail, imgUserProfile, this)
         customDialog = CustomDialog(this@HomeActivity)
+        homePresenter.onLoadFavoriteList()
+        homePresenter.onLoadBookingInfo()
     }
 
     private fun onUserProfileClicked() {
@@ -204,8 +209,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
             R.id.menu_nearby_hotel -> {
-                val intent = Intent(this@HomeActivity, MapsActivity::class.java)
-                startActivity(intent)
+                if (LocationPermission.checkLocationPermission(this)){
+                    val intent = Intent(this@HomeActivity, MapsActivity::class.java)
+                    startActivity(intent)
+                }
             }
             else -> return false
         }
@@ -307,6 +314,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_profile -> {
                 startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
             }
+            R.id.nav_booking -> {
+                startActivity(Intent(this, BookingRecord::class.java))
+            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
@@ -314,7 +324,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun openFavoriteListDialog() {
-        homePresenter.onViewFavoriteList(this@HomeActivity, R.layout.dialog_favorite_list, R.style.DialogBookHotelTheme, customDialog)
+        homePresenter.onViewFavoriteList(this@HomeActivity, R.layout.dialog_favorite_list, R.style.DialogFavoriteHotelTheme, customDialog)
     }
 
     private fun checkCameraPermission(): Boolean {
@@ -396,10 +406,21 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (requestCode == REQUEST_CAMERA_PERMISSION) {
-            if (checkStoragePermission()) openCamera()
-        } else if (requestCode == REQUEST_EXTERNAL_STORAGE_PERMISSION) openCamera()
-        else Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show()
+        when (requestCode){
+            REQUEST_CAMERA_PERMISSION -> {
+                if (checkStoragePermission()) openCamera()
+            }
+            REQUEST_EXTERNAL_STORAGE_PERMISSION -> {
+                openCamera()
+            }
+            REQUEST_LOCATION -> {
+                if (LocationPermission.checkLocationPermission(this)) {
+                    val intent = Intent(this@HomeActivity, MapsActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            else -> Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun afterTextChanged(s: Editable?) {
@@ -427,11 +448,20 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
+
     companion object {
         private const val GALLERY = 1
         private const val CAMERA = 2
         private const val VIEW_PROFILE_PICTURE = 3
         private const val REQUEST_CAMERA_PERMISSION = 4
         private const val REQUEST_EXTERNAL_STORAGE_PERMISSION = 5
+        private const val REQUEST_LOCATION = 6
     }
 }

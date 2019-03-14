@@ -10,7 +10,7 @@ class BookingInvoiceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        overridePendingTransition(R.anim.anim_sliding_in_right, R.anim.anim_sliding_out_left)
         setContentView(R.layout.activity_booking_invoice)
 
         loadBookingInfo()
@@ -20,5 +20,10 @@ class BookingInvoiceActivity : AppCompatActivity() {
         bookingInvoiceMvpPresenter.getBookingDetail(tvCheckInDate, tvCheckOutData, tvCheckInTime, tvCheckOutTime,
             tvRoomType, tvInvoiceRoomQty, tvInvoiceNumOfGuests, tvGuestName, tvTotalAmount, tvPrePaidAmount,
             tvInvoiceNumOfDaysBookingList, tvHotelNameBookingList, tvHotelLocation, tvIssuedDate)
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.anim_sliding_in_left, R.anim.anim_sliding_out_right)
     }
 }
