@@ -34,18 +34,13 @@ class UserInfoFragment : Fragment(), View.OnClickListener {
                 val uName: String = etName.text.toString().trim()
                 val uSex: String = etSex.text.toString().trim()
                 val uAge: String = etAge.text.toString().trim()
-                val uAddress: String = etCountry.text.toString().trim() + ", " + etProvince.text.toString().trim() + ", " +
-                        etDistrict.text.toString().trim() + ", " + etVillage.text.toString().trim()
+                val uAddress: String = etAddress.text.toString().trim()
 
-                if (uName.isEmpty() || uSex.isEmpty() || uAge.isEmpty() || uAddress.isEmpty() ||
-                    (!uAddress.contains(","))) {
+                if (uName.isEmpty() || uSex.isEmpty() || uAge.isEmpty() || uAddress.isEmpty()) {
                     if (etName.text.isEmpty()) etName.error = "required"
                     if (etSex.text.isEmpty()) etSex.error = "required"
                     if (etAge.text.isEmpty()) etAge.error = "required"
-                    if (etCountry.text.isEmpty()) etCountry.error = "required"
-                    if (etProvince.text.isEmpty()) etProvince.error = "required"
-                    if (etDistrict.text.isEmpty()) etDistrict.error = "required"
-                    if (etVillage.text.isEmpty()) etVillage.error = "required"
+                    if (etAddress.text.isEmpty()) etAddress.error = "required"
                 } else {
                     val userBasicInfo = UserBasicInfo(uName, uSex, uAge, uAddress)
                     val bundle= Bundle()

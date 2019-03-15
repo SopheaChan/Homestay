@@ -113,7 +113,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener, 
         initListener()
     }
 
-    fun createCustomMarker(context: Context, @DrawableRes resource: Int, _name: String): Bitmap {
+    /*fun createCustomMarker(context: Context, @DrawableRes resource: Int, _name: String): Bitmap {
 
         val marker = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
             R.layout.custom_marker_layout,
@@ -136,7 +136,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener, 
         marker.draw(canvas)
 
         return bitmap
-    }
+    }*/
 
     //Request nearby restaurant LatLng value using Volley
     private fun volleyRequest(latLng: LatLng) {

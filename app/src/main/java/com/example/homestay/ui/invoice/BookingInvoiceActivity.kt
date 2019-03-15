@@ -6,7 +6,8 @@ import com.example.homestay.R
 import kotlinx.android.synthetic.main.activity_booking_invoice.*
 
 class BookingInvoiceActivity : AppCompatActivity() {
-    val bookingInvoiceMvpPresenter: BookingInvoiceMvpPresenter = BookingInvoicePresenter(this@BookingInvoiceActivity)
+    private val bookingInvoiceMvpPresenter: BookingInvoiceMvpPresenter =
+        BookingInvoicePresenter(this@BookingInvoiceActivity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,9 +18,11 @@ class BookingInvoiceActivity : AppCompatActivity() {
     }
 
     private fun loadBookingInfo() {
-        bookingInvoiceMvpPresenter.getBookingDetail(tvCheckInDate, tvCheckOutData, tvCheckInTime, tvCheckOutTime,
+        bookingInvoiceMvpPresenter.getBookingDetail(
+            tvCheckInDate, tvCheckOutData, tvCheckInTime, tvCheckOutTime,
             tvRoomType, tvInvoiceRoomQty, tvInvoiceNumOfGuests, tvGuestName, tvTotalAmount, tvPrePaidAmount,
-            tvInvoiceNumOfDaysBookingList, tvHotelNameBookingList, tvHotelLocation, tvIssuedDate)
+            tvInvoiceNumOfDaysBookingList, tvHotelNameBookingList, tvHotelLocation, tvIssuedDate
+        )
     }
 
     override fun finish() {

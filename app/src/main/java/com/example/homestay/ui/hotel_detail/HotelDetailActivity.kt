@@ -1,16 +1,12 @@
 package com.example.homestay.ui.hotel_detail
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.*
 import com.example.homestay.R
 import com.example.homestay.custom.CustomDialog
-import com.example.homestay.ui.maps.MapsActivity
-import kotlinx.android.synthetic.main.activity_hotel_detail.*
-import kotlin.collections.ArrayList
 import com.example.homestay.custom.ImageSlider
-import com.example.homestay.ui.book_hotel.BookHotelActivity
+import kotlinx.android.synthetic.main.activity_hotel_detail.*
 
 class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -18,7 +14,7 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var hotelName: String
     private lateinit var hotelAddress: String
     private val customDialog = CustomDialog(this@HotelDetailActivity)
-    private val hotelDetailMvpPresenter: HotelDetailMvpPresenter = HotelDetailPresenter()
+    private val hotelDetailMvpPresenter: HotelDetailMvpPresenter = HotelDetailPresenter(this@HotelDetailActivity)
 
     private val imageSlider: ImageSlider = ImageSlider()
 
@@ -58,41 +54,12 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.share -> {
-
-            }
-            R.id.add_to_favorite -> {
-                val title = item.title
-                if (title == "Mark as favorite") {
-                    item.setIcon(R.drawable.ic_favorite_border_light_pink_24dp)
-                    item.title = "Added to favorite"
-                    hotelDetailMvpPresenter.addToFavorite(this, hotelName, hotelAddress, listImage[0])
-                } else if (title == "Added to favorite") {
-                    item.setIcon(R.drawable.ic_menu_favorite_white)
-                    item.title = "Mark as favorite"
-                }
-            }
-            else -> return false
-        }
+        hotelDetailMvpPresenter.setActionToSelectedItem(item, R.id.share, R.id.add_to_favorite, hotelName, hotelAddress, listImage)
         return true
     }
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.btnViewHotelLocation -> {
-                startActivity(Intent(this, MapsActivity::class.java))
-            }
-            R.id.btnViewHotelDescription -> {
-                customDialog.displayDialog(R.layout.dialog_view_hotel_description, R.style.DialogTheme)
-            }
-            R.id.btnBookHotel -> {
-                val intent = Intent(this, BookHotelActivity::class.java)
-                intent.putExtra("hotel_name", hotelName)
-                intent.putExtra("hotel_address", hotelAddress)
-                startActivity(intent)
-            }
-        }
+        hotelDetailMvpPresenter.setActionToItemClick(v, R.id.btnViewHotelLocation, R.id.btnViewHotelDescription, R.id.btnBookHotel, customDialog, hotelName, hotelAddress)
     }
 
     override fun finish() {

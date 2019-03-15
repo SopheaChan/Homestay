@@ -25,6 +25,6 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun loadUserData() {
         profileMvpPresenter.loadUserInfo(imgProfileImage, tvProfileName, tvProfileAge, tvProfileGender, tvProfilePhoneNum,
-            tvProfileEmail, tvProfileCountry, tvProfileState, tvProfileTown, tvProfileVillage, imgImageBackground)
+            tvProfileEmail, tvUserAddress, imgImageBackground)
     }
 }

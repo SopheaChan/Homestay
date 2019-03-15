@@ -35,14 +35,12 @@ class ProfilePresenter(private val context: Activity) : ProfileMvpPresenter {
     override fun loadUserInfo(
         profileImage: CircleImageView, tvName: TextView, tvAge: TextView,
         tvGender: TextView, tvPhone: TextView, tvEmail: TextView,
-        tvCountry: TextView, tvState: TextView, tvTown: TextView, tvVillage: TextView,
-        imageBackground: ImageView) {
+        tvAddress: TextView, imageBackground: ImageView) {
 
             val user: User? = StoreCurrentUserInfo.getUser()
                 val userProfile = user?.uProfile
                 val userInfo: UserBasicInfo? = user?.userBasicInfo
                 val userContact: UserContact? = user?.userContact
-                val userAddress: List<String> ?= userInfo?.address?.split(",")
                 Glide.with(context.baseContext).load(userProfile).into(profileImage)
                 Glide.with(context.baseContext).load(userProfile).override(30, 30)  //just set override like this
                     .into(imageBackground)
@@ -51,9 +49,6 @@ class ProfilePresenter(private val context: Activity) : ProfileMvpPresenter {
                 tvGender.text = userInfo?.sex
                 tvPhone.text = userContact?.phone
                 tvEmail.text = userContact?.email
-                tvCountry.text = userAddress?.get(0)
-                tvState.text = userAddress?.get(1)
-                tvTown.text = userAddress?.get(2)
-                tvVillage.text = userAddress?.get(3)
+                tvAddress.text = userInfo?.address
     }
 }

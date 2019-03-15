@@ -18,7 +18,6 @@ object LocationPermission {
         )
         {
             ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), REQUEST_LOCATION)
-            Toast.makeText(activity.baseContext, "No access to user permission", Toast.LENGTH_SHORT).show()
             return false
         }
         return true

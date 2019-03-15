@@ -17,6 +17,7 @@ open class HomeAdapter(
     RecyclerView.Adapter<HomeAdapter.ViewHolder>(), RatingBar.OnRatingBarChangeListener {
 
     private var action : ((HotelData, ImageView) -> Unit) ?= null
+    private var previousPosition = 0
 
     override fun onCreateViewHolder(container: ViewGroup, position: Int): ViewHolder {
         return ViewHolder(
@@ -41,6 +42,13 @@ open class HomeAdapter(
             action?.invoke(hotelData, viewHolder.imgHotelImage)
         }
         viewHolder.ratingBar.onRatingBarChangeListener = this
+
+        //Adding animation
+        if (position > previousPosition){
+
+        } else{
+
+        }
     }
 
     fun setOnItemClickListener(action : (HotelData, ImageView) -> Unit){

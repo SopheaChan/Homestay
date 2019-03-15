@@ -12,5 +12,5 @@ import com.example.homestay.model.User
 interface SignUpMvpPresenter {
     fun onButtonBackListener(fragmentManager: FragmentManager, fragment: Fragment)
     fun onButtonNextListener(fragmentManager: FragmentManager, fragment: Fragment, bundle: Bundle)
-    fun saveUserToDatabase(users: User, password: String, context: Context?, dialogLoading: DialogDisplayLoadingProgress)
+    fun saveUserToDatabase(users: User, password: String, dialogLoading: DialogDisplayLoadingProgress)
 }

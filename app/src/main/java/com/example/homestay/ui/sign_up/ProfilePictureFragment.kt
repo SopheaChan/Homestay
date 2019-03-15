@@ -103,7 +103,7 @@ class ProfilePictureFragment : Fragment(), View.OnClickListener {
             val profile: Uri ?= data?.data
             imgProfilePicture.setImageURI(profile)
             val user = User(userBasicInfo, userContact, profile.toString())
-            signUpMvpPresenter.saveUserToDatabase(user, password, context, dialogLoadingProgress)
+            signUpMvpPresenter.saveUserToDatabase(user, password, dialogLoadingProgress)
             dialogLoadingProgress.displayLoadingProgressRecursive("Saving user data...")
         } else if (requestCode == RequestCode.CAMERA && resultCode == Activity.RESULT_OK){
             val extras = data?.extras
@@ -115,7 +115,7 @@ class ProfilePictureFragment : Fragment(), View.OnClickListener {
             imgProfilePicture.setImageBitmap(imageBitmap)
             imgProfilePicture.setImageBitmap(imageBitmap)
             val user = User(userBasicInfo, userContact, path)
-            signUpMvpPresenter.saveUserToDatabase(user, password, context, dialogLoadingProgress)
+            signUpMvpPresenter.saveUserToDatabase(user, password, dialogLoadingProgress)
             dialogLoadingProgress.displayLoadingProgressRecursive("Saving user data...")
         }
     }

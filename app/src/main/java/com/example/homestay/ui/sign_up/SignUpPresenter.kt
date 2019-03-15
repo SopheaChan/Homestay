@@ -1,5 +1,6 @@
 package com.example.homestay.ui.sign_up
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -49,7 +50,6 @@ class SignUpPresenter(private val context: Context) : SignUpMvpPresenter {
     override fun saveUserToDatabase(
         users: User,
         password: String,
-        context: Context?,
         dialogLoading: DialogDisplayLoadingProgress
     ) {
         users.userContact?.email?.let {
@@ -98,4 +98,5 @@ class SignUpPresenter(private val context: Context) : SignUpMvpPresenter {
                 }
         }
     }
+
 }
