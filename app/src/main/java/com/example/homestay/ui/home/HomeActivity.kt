@@ -36,8 +36,8 @@ import kotlinx.android.synthetic.main.app_bar_home.*
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     TextWatcher {
 
-//    private lateinit var recyclerView: RecyclerView
-    private lateinit var recyclerView: com.mlsdev.animatedrv.AnimatedRecyclerView
+    private lateinit var recyclerView: RecyclerView
+//    private lateinit var recyclerView: com.mlsdev.animatedrv.AnimatedRecyclerView
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var listHotel: MutableList<HotelData>
 
@@ -91,10 +91,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recyclerView.hasFixedSize()
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        /*val animation: LayoutAnimationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_right_to_left)
+        val animation: LayoutAnimationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_right_to_left)
         recyclerView.layoutAnimation = animation
         recyclerView.adapter?.notifyDataSetChanged()
-        recyclerView.scheduleLayoutAnimation()*/
+        recyclerView.scheduleLayoutAnimation()
 
         homeAdapter = HomeAdapter(this, listHotel)
         homeAdapter.setOnItemClickListener { hotelData, imageView ->

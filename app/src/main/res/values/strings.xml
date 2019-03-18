@@ -70,4 +70,10 @@
         <item>Double Room</item>
         <item>Family Room</item>
     </string-array>
+    <string name="path_search">
+       M141,17 A9,9 0 1,1 142,16 L149,23
+    </string>
+
+    <string name="facebook_app_id">375280763057980</string>
+    <string name="fb_login_protocol_scheme">fb375280763057980</string>
 </resources>

@@ -227,7 +227,9 @@ class BookHotelPresenter(private val activity: Activity) : BookHotelMvpPresenter
         etRoomQty: EditText,
         tvClientName: TextView,
         tvTotalAmount1: TextView,
-        etDepositAmount: EditText
+        etDepositAmount: EditText,
+        tvHotelName: TextView,
+        tvHotelAddress: TextView
     ) {
         lateinit var mCheckInDate: String
         lateinit var mCheckOutDate: String
@@ -267,7 +269,9 @@ class BookHotelPresenter(private val activity: Activity) : BookHotelMvpPresenter
                 mRoomQty = etRoomQty.text.toString().trim()
                 mGuestName = tvClientName.text.toString().trim()
                 mTotalAmount = tvTotalAmount1.text.toString().trim()
+                mHotelName = tvHotelName.text.toString().trim()
                 mPrePaidAmount = etDepositAmount.text.toString().trim()
+                mHotelAddress = tvHotelAddress.text.toString().trim()
                 if (mRoomQty.isEmpty() || mPrePaidAmount.isEmpty()) {
                     if (mRoomQty.isEmpty()) {
                         etRoomQty.error = "How many room do you want to book with us?"

@@ -103,7 +103,9 @@ class BookHotelActivity : AppCompatActivity(), View.OnClickListener {
             etRoomQty,
             tvClientName,
             tvTotalAmount1,
-            etDepositeAmount
+            etDepositeAmount,
+            tvHostingHotelName,
+            tvHotelAddress
         )
     }
 

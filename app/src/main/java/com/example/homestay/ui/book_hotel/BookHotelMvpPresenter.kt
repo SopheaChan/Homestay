@@ -56,6 +56,8 @@ interface BookHotelMvpPresenter {
         etRoomQty: EditText,
         tvClientName: TextView,
         tvTotalAmount1: TextView,
-        etDepositAmount: EditText
+        etDepositAmount: EditText,
+        tvHotelName: TextView,
+        tvHotelAddress: TextView
     )
 }

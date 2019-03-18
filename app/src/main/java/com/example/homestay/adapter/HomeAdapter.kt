@@ -56,6 +56,7 @@ open class HomeAdapter(
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         val imgHotelImage: ImageView = view.findViewById(R.id.imgHotelPicture)
         val tvHotelName: TextView = view.findViewById(R.id.tvHotelNameBookingList)
         val tvHotelAddress: TextView = view.findViewById(R.id.tvHotelAddress)
@@ -70,4 +71,5 @@ open class HomeAdapter(
         listHotel = listHotelFiltered
         notifyDataSetChanged()
     }
+
 }

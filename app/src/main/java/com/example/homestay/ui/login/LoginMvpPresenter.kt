@@ -12,4 +12,5 @@ interface LoginMvpPresenter {
     )
     fun setButtonSignUpListener()
     fun checkUserLoginState(context: Activity, dialog: DialogDisplayLoadingProgress)
+    fun loginWithFacebook()
 }

@@ -135,6 +135,7 @@ class HomePresenter(private val context: Activity) : HomeMvpPresenter {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
+                bookingRecord.clear()
                 val item = p0.children
                 item.forEach {
                     val bookingInfo: BookingInfo? = it.getValue(BookingInfo::class.java)
@@ -363,7 +364,13 @@ class HomePresenter(private val context: Activity) : HomeMvpPresenter {
         }
     }
 
-    override fun onDialogMenuCallback(result: Int, dialog: Dialog, dialogLayout: Int, dialogStyle: Int, animation: Int) {
+    override fun onDialogMenuCallback(
+        result: Int,
+        dialog: Dialog,
+        dialogLayout: Int,
+        dialogStyle: Int,
+        animation: Int
+    ) {
         when (result) {
             GALLERY -> {
 //                openGallery()

@@ -2,14 +2,23 @@ package com.example.homestay.ui.login
 
 import android.app.Activity
 import android.content.Intent
+import android.provider.ContactsContract
 import android.util.Patterns
 import android.widget.EditText
 import android.widget.Toast
 import com.example.homestay.custom.DialogDisplayLoadingProgress
 import com.example.homestay.ui.home.HomeActivity
 import com.example.homestay.ui.sign_up.SignUpActivity
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.appevents.UserDataStore.EMAIL
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import java.util.*
+import javax.xml.transform.Result
 
 class LoginPresenter(private val context: Activity) : LoginMvpPresenter {
     lateinit var mFirebaseAuth: FirebaseAuth
@@ -63,4 +72,27 @@ class LoginPresenter(private val context: Activity) : LoginMvpPresenter {
             context.finish()
         }
     }
+
+    override fun loginWithFacebook() {
+        val EMAIL = "email"
+        val loginButton = LoginButton(context.baseContext)
+        val callBackManager = CallbackManager.Factory.create()
+        loginButton.setReadPermissions(Arrays.asList(EMAIL))
+        loginButton.registerCallback(callBackManager, object : FacebookCallback<LoginResult>{
+            override fun onSuccess(result: LoginResult?) {
+                Toast.makeText(context.baseContext, result?.accessToken.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onCancel() {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onError(error: FacebookException?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+        })
+    }
+
+
 }
