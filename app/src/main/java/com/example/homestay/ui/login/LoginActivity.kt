@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.media.session.MediaSession
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Base64
@@ -13,10 +14,15 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.example.homestay.R
 import com.example.homestay.custom.DialogDisplayLoadingProgress
+import com.example.homestay.ui.home.HomeActivity
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.*
+import com.twitter.sdk.android.core.*
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import java.security.MessageDigest
@@ -28,9 +34,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private val loginMvpPresenter: LoginMvpPresenter = LoginPresenter(this@LoginActivity)
     private val dialogLoadingProgress: DialogDisplayLoadingProgress = DialogDisplayLoadingProgress(this@LoginActivity)
     val EMAIL = "email"
+    val PUBLIC_PROFILE = "public_profile"
+    val PUBLIC_ACTION = "public_action"
+    lateinit var mAuth: FirebaseAuth
     private lateinit var callbackManager: CallbackManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Twitter.initialize(this)
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -39,6 +50,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         btnLogin.setOnClickListener(this)
         btnSignUp.setOnClickListener(this)
         btnFbLogin.setOnClickListener(this)
+        btnTwitterLogin.setOnClickListener(this)
 
         callbackManager = CallbackManager.Factory.create()
         val currentAccessToken = AccessToken.getCurrentAccessToken()
@@ -46,8 +58,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         Log.e("Is Loggin with fb: ", isLogin.toString())
 
         loginMvpPresenter.checkUserLoginState(this, dialogLoadingProgress)
+        accessTokenTracker()
 //        printKeyHash(this)
     }
+
 
     override fun onClick(v: View?) {
         val buttonID = v?.id
@@ -59,20 +73,24 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 loginMvpPresenter.setButtonSignUpListener()
             }
             R.id.btnFbLogin -> {
-                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(EMAIL))
-                LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+                dialogLoadingProgress.displayLoadingProgressRecursive("Logging in...")
+                btnFbLogin.setReadPermissions(Arrays.asList(EMAIL,PUBLIC_PROFILE,PUBLIC_ACTION))
+                btnFbLogin.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
                     var userName: String ?= ""
                     var gender: String ?= ""
-                    var email: String ?= ""
+                    var email: String = ""
                     override fun onSuccess(result: LoginResult?) {
+                        val token = AccessToken.getCurrentAccessToken()
                         val request: GraphRequest = GraphRequest.newMeRequest(
                             AccessToken.getCurrentAccessToken()
                         ) { `object`, response ->
                             userName = `object`?.getString("name")
-                            Toast.makeText(this@LoginActivity, userName, Toast.LENGTH_SHORT).show()
+//                            email = `object`?.get("email") as String
+                            handleFacebookAccessToken(result?.accessToken!!)
+                           Log.e("Token: ", userName + email )
                         }
                         var parameter = Bundle()
-                        parameter.putString("fields", userName)
+                        parameter.putString("fields", "name,email,public_action")
                         request.parameters = parameter
                         request.executeAsync()
                     }
@@ -87,46 +105,89 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                 })
             }
+            R.id.btnTwitterLogin -> {
+                btnTwitterLogin.callback = object : Callback<TwitterSession>(){
+                    override fun success(result: Result<TwitterSession>?) {
+                        Log.e("Twitter Login state: ${result?.data}", "")
+                        handleTwitterSession(result!!.data)
+                    }
+
+                    override fun failure(exception: TwitterException?) {
+                        Toast.makeText(this@LoginActivity, "Failed...", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+            }
             else -> return
         }
     }
 
-    fun printKeyHash(context: Activity): String? {
-        val packageInfo: PackageInfo
-        var key: String? = null
-        try {
-            //getting application package name, as defined in manifest
-            val packageName = context.applicationContext.packageName
+    private fun handleTwitterSession(session: TwitterSession) {
+        Log.d("Twitter session", "handleTwitterSession:$session")
 
-            //Retriving package info
-            packageInfo = context.packageManager.getPackageInfo(
-                packageName,
-                PackageManager.GET_SIGNATURES
-            )
+        val credential = TwitterAuthProvider.getCredential(
+            session.authToken.token,
+            session.authToken.secret)
 
-            Log.e("Package Name=", context.applicationContext.packageName)
+        /*auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
+                    val user = auth.currentUser
+                    updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                    updateUI(null)
+                }
 
-            for (signature in packageInfo.signatures) {
-                val md = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                key = String(Base64.encode(md.digest(), 0))
+                // ...
+            }*/
+    }
 
-                // String key = new String(Base64.encodeBytes(md.digest()));
-                Log.e("Key Hash=", key)
+    private fun handleFacebookAccessToken(token: AccessToken) {
+        val credential: AuthCredential = FacebookAuthProvider.getCredential(token.token)
+        val auth = FirebaseAuth.getInstance()
+        var userID: String
+        var firebaseUser: FirebaseUser?
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    /*startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                    Log.e("Sign in result: ", "signInWithCredential:success")*/
+                    dialogLoadingProgress.getDialog().dismiss()
+                    firebaseUser = auth.currentUser
+                    userID = firebaseUser!!.uid
+                    Log.e("Facebook auth state: ", "success $userID")
+
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.e("Sign in result: ", "signInWithCredential:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                }
             }
-        } catch (e1: PackageManager.NameNotFoundException) {
-            Log.e("Name not found", e1.toString())
-        } catch (e: NoSuchAlgorithmException) {
-            Log.e("No such an algorithm", e.toString())
-        } catch (e: Exception) {
-            Log.e("Exception", e.toString())
-        }
+    }
 
-        return key
+    private fun accessTokenTracker() {
+        object : AccessTokenTracker(){
+            override fun onCurrentAccessTokenChanged(oldAccessToken: AccessToken?, currentAccessToken: AccessToken?) {
+                if (currentAccessToken == null){
+                    dialogLoadingProgress.getDialog().dismiss()
+                    Log.e("Log out successfully...","")
+                }
+            }
+
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
+        btnTwitterLogin.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
     }
 }

@@ -1,11 +1,15 @@
 package com.example.homestay.ui.hotel_detail
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import com.example.homestay.R
 import com.example.homestay.custom.CustomDialog
 import com.example.homestay.custom.ImageSlider
+import com.example.homestay.ui.home.HomePresenter
 import kotlinx.android.synthetic.main.activity_hotel_detail.*
 
 class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
@@ -65,5 +69,10 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        hotelDetailMvpPresenter.getActivityResult(requestCode, resultCode, data)
     }
 }

@@ -2,21 +2,42 @@ package com.example.homestay.ui.hotel_detail
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.support.annotation.RequiresApi
+import android.support.v4.app.ActivityCompat
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import com.example.homestay.R
 import com.example.homestay.custom.CustomDialog
+import com.example.homestay.custom.DialogDisplayLoadingProgress
+import com.example.homestay.custom.DialogMenu
 import com.example.homestay.model.FavoriteList
 import com.example.homestay.ui.book_hotel.BookHotelActivity
+import com.example.homestay.ui.home.HomePresenter
 import com.example.homestay.ui.maps.MapsActivity
 import com.example.homestay.utils.GetCurrentDateTime
+import com.facebook.share.model.ShareLinkContent
+import com.facebook.share.model.SharePhoto
+import com.facebook.share.model.SharePhotoContent
+import com.facebook.share.widget.ShareButton
+import com.facebook.share.widget.ShareDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import de.hdodenhof.circleimageview.CircleImageView
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
 class HotelDetailPresenter(private val activity: Activity) : HotelDetailMvpPresenter {
 
@@ -78,7 +99,17 @@ class HotelDetailPresenter(private val activity: Activity) : HotelDetailMvpPrese
     ) {
         when (item?.itemId) {
             R.id.share -> {
-
+                /*val photo = SharePhoto.Builder()
+                    .setBitmap(getBitmap(listImage[0]))
+                    .build()
+                val content = SharePhotoContent.Builder()
+                    .addPhoto(photo)
+                    .build()
+                val shareButton = ShareButton(activity.baseContext)
+                shareButton.shareContent = content*/
+                if (checkCameraPermission()){
+                    onOpenCamera()
+                }
             }
             R.id.add_to_favorite -> {
                 val title = item.title
@@ -92,5 +123,88 @@ class HotelDetailPresenter(private val activity: Activity) : HotelDetailMvpPrese
                 }
             }
         }
+    }
+
+    /*private fun getBitmap(src: String): Bitmap?{
+        try {
+            val url = URL(src)
+            val connection: HttpURLConnection  = url.openConnection() as HttpURLConnection
+            connection.setDoInput(true)
+            connection.connect()
+            val input: InputStream = connection.getInputStream()
+            val myBitmap = BitmapFactory.decodeStream(input)
+            return myBitmap
+        }catch (e: IOException){
+            Log.e("", e.message)
+            return null
+        }
+    }*/
+
+    private fun checkCameraPermission(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                activity.baseContext,
+                android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                activity,
+                arrayOf(android.Manifest.permission.CAMERA),
+                REQUEST_CAMERA_PERMISSION
+            )
+            return false
+        }
+
+        return true
+    }
+
+     override fun getActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                CAMERA -> {
+                    val extras = data!!.extras
+                    val imageBitmap = extras!!.get("data") as Bitmap
+
+                    val os = ByteArrayOutputStream()
+                    imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, os)
+                    val path =
+                        MediaStore.Images.Media.insertImage(
+                            activity.contentResolver,
+                            imageBitmap,
+                            "profile_picture",
+                            null
+                        )
+                    sharePhotoToFacebook(path)
+                    Toast.makeText(activity.baseContext, path, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    fun onOpenCamera() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(activity.packageManager) != null) {
+            activity.startActivityForResult(takePictureIntent, CAMERA)
+        }
+    }
+
+    private fun sharePhotoToFacebook(path: String){
+        val shareDialog = ShareDialog(activity)
+        if (ShareDialog.canShow(ShareLinkContent::class.java)){
+            val linkContent = ShareLinkContent.Builder()
+                .setContentTitle("Homestay")
+                .setImageUrl(Uri.parse(path))
+                .setContentDescription("Hotel Image")
+                .build()
+            shareDialog.show(linkContent)
+        }
+    }
+
+    companion object {
+        const val REQUEST_CAMERA_PERMISSION = 1
+        const val CAMERA = 2
     }
 }

@@ -54,4 +54,14 @@ dependencies {
 
     //facebook login
     implementation 'com.facebook.android:facebook-login:4.41.0'
+    //facebook share content
+    implementation 'com.facebook.android:facebook-share:4.41.0'
+
+    //tweeter dependency
+    implementation 'com.twitter.sdk.android:twitter:3.1.1'
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+    implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
+    implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
+    implementation 'com.twitter.sdk.android:twitter-mopub:3.1.1'
+
 }

@@ -1,6 +1,7 @@
 package com.example.homestay.ui.hotel_detail
 
 import android.app.Activity
+import android.content.Intent
 import android.view.MenuItem
 import android.view.View
 import com.example.homestay.custom.CustomDialog
@@ -17,4 +18,9 @@ interface HotelDetailMvpPresenter {
         hotelAddress: String
     )
     fun setActionToSelectedItem(item: MenuItem?, itemShare: Int, itemAddToFavorite: Int, hotelName: String, hotelAddress: String, listImage: ArrayList<String>)
+    fun getActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    )
 }
