@@ -19,6 +19,7 @@ import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.facebook.share.widget.ShareDialog
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.*
 import com.twitter.sdk.android.core.*
@@ -38,6 +39,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     val PUBLIC_ACTION = "public_action"
     lateinit var mAuth: FirebaseAuth
     private lateinit var callbackManager: CallbackManager
+    private lateinit var shareDialog: ShareDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +55,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         btnTwitterLogin.setOnClickListener(this)
 
         callbackManager = CallbackManager.Factory.create()
+//        shareDialog = ShareDialog(this)
         val currentAccessToken = AccessToken.getCurrentAccessToken()
         val isLogin: Boolean = currentAccessToken != null && !currentAccessToken.isExpired
         Log.e("Is Loggin with fb: ", isLogin.toString())
@@ -74,7 +77,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btnFbLogin -> {
                 dialogLoadingProgress.displayLoadingProgressRecursive("Logging in...")
-                btnFbLogin.setReadPermissions(Arrays.asList(EMAIL,PUBLIC_PROFILE,PUBLIC_ACTION))
+                btnFbLogin.setReadPermissions(Arrays.asList(EMAIL,PUBLIC_PROFILE))
                 btnFbLogin.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
                     var userName: String ?= ""
                     var gender: String ?= ""
@@ -90,7 +93,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                            Log.e("Token: ", userName + email )
                         }
                         var parameter = Bundle()
-                        parameter.putString("fields", "name,email,public_action")
+                        parameter.putString("fields", "name,email")
                         request.parameters = parameter
                         request.executeAsync()
                     }
@@ -188,6 +191,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
         btnTwitterLogin.onActivityResult(requestCode, resultCode, data)
+//        loginMvpPresenter.getActivityResult(requestCode, resultCode, data!!, shareDialog)
         super.onActivityResult(requestCode, resultCode, data)
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.MenuItem
 import android.view.View
 import com.example.homestay.custom.CustomDialog
+import com.facebook.share.widget.ShareDialog
 
 interface HotelDetailMvpPresenter {
     fun addToFavorite(context: Activity, hotelName: String, hotelAddress: String, imgUrl: String)
@@ -18,9 +19,6 @@ interface HotelDetailMvpPresenter {
         hotelAddress: String
     )
     fun setActionToSelectedItem(item: MenuItem?, itemShare: Int, itemAddToFavorite: Int, hotelName: String, hotelAddress: String, listImage: ArrayList<String>)
-    fun getActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    )
+    fun getActivityResult(requestCode: Int, resultCode: Int, data: Intent, shareDialog: ShareDialog)
+    fun getRequestPermissionResult(requestCode: Int)
 }

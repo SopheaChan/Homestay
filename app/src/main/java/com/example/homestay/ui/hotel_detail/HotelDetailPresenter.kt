@@ -3,10 +3,12 @@ package com.example.homestay.ui.hotel_detail
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
@@ -33,11 +35,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import de.hdodenhof.circleimageview.CircleImageView
-import java.io.ByteArrayOutputStream
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.*
 
 class HotelDetailPresenter(private val activity: Activity) : HotelDetailMvpPresenter {
 
@@ -77,7 +78,10 @@ class HotelDetailPresenter(private val activity: Activity) : HotelDetailMvpPrese
                 activity.startActivity(Intent(activity.baseContext, MapsActivity::class.java))
             }
             R.id.btnViewHotelDescription -> {
-                customDialog.displayDialog(R.layout.dialog_view_hotel_description, R.style.DialogTheme)
+//                customDialog.displayDialog(R.layout.dialog_view_hotel_description, R.style.DialogTheme)
+                if (checkCameraPermission()){
+                    openCamera()
+                }
             }
             R.id.btnBookHotel -> {
                 val intent = Intent(activity.baseContext, BookHotelActivity::class.java)
@@ -99,17 +103,7 @@ class HotelDetailPresenter(private val activity: Activity) : HotelDetailMvpPrese
     ) {
         when (item?.itemId) {
             R.id.share -> {
-                /*val photo = SharePhoto.Builder()
-                    .setBitmap(getBitmap(listImage[0]))
-                    .build()
-                val content = SharePhotoContent.Builder()
-                    .addPhoto(photo)
-                    .build()
-                val shareButton = ShareButton(activity.baseContext)
-                shareButton.shareContent = content*/
-                if (checkCameraPermission()){
-                    onOpenCamera()
-                }
+                selectImageFromGallery()
             }
             R.id.add_to_favorite -> {
                 val title = item.title
@@ -125,21 +119,57 @@ class HotelDetailPresenter(private val activity: Activity) : HotelDetailMvpPrese
         }
     }
 
-    /*private fun getBitmap(src: String): Bitmap?{
-        try {
-            val url = URL(src)
-            val connection: HttpURLConnection  = url.openConnection() as HttpURLConnection
-            connection.setDoInput(true)
-            connection.connect()
-            val input: InputStream = connection.getInputStream()
-            val myBitmap = BitmapFactory.decodeStream(input)
-            return myBitmap
-        }catch (e: IOException){
-            Log.e("", e.message)
-            return null
-        }
-    }*/
+    //...........................//
+    //Share image from Gallery to Facebook
+    //...........................//
+    private fun selectImageFromGallery() {
+        val intent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+        activity.startActivityForResult(intent, GALLERY)
+    }
 
+    override fun getActivityResult(requestCode: Int, resultCode: Int, data: Intent, shareDialog: ShareDialog) {
+        when (requestCode) {
+            GALLERY -> {
+                val selectedImage = data.data
+                val projection = arrayOf(MediaStore.MediaColumns.DATA)
+
+                val cursor: Cursor = activity.managedQuery(
+                    selectedImage, projection, null, null,
+                    null
+                )
+                val column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
+                cursor.moveToFirst()
+                val selectedImagePath = cursor.getString(column_index)
+                Log.e("selectedImage path:", selectedImagePath)
+                var thumbnail: Bitmap
+                val options: BitmapFactory.Options = BitmapFactory.Options()
+                options.inJustDecodeBounds = true
+                BitmapFactory.decodeFile(selectedImagePath, options)
+                val REQUIRED_SIZE = 200
+                var scale = 1
+                while (options.outWidth / scale / 2 >= REQUIRED_SIZE
+                    && options.outHeight / scale / 2 >= REQUIRED_SIZE
+                )
+                    scale *= 2
+                options.inSampleSize = scale
+                options.inJustDecodeBounds = false
+                thumbnail = BitmapFactory.decodeFile(selectedImagePath, options)
+                ShareDialog(thumbnail, shareDialog)
+            }
+            CAMERA -> {
+                getCaptureImageResult(data, shareDialog)
+            }
+        }
+    }
+    //...............end.............//
+
+
+    //..................................//
+    //Capture image and share to Facebook//
+    //..................................//
     private fun checkCameraPermission(): Boolean {
         if (ActivityCompat.checkSelfPermission(
                 activity.baseContext,
@@ -148,63 +178,91 @@ class HotelDetailPresenter(private val activity: Activity) : HotelDetailMvpPrese
         ) {
             ActivityCompat.requestPermissions(
                 activity,
-                arrayOf(android.Manifest.permission.CAMERA),
-                REQUEST_CAMERA_PERMISSION
+                arrayOf(android.Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION
             )
             return false
         }
-
         return true
     }
 
-     override fun getActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    ) {
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                CAMERA -> {
-                    val extras = data!!.extras
-                    val imageBitmap = extras!!.get("data") as Bitmap
+    private fun checkStoragePermission(): Boolean {
+        if (ActivityCompat.checkSelfPermission(activity.baseContext, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                activity.baseContext,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                activity,
+                arrayOf(
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ), REQUEST_GALLERY_PERMISSION
+            )
+            return false
+        }
+        return true
+    }
 
-                    val os = ByteArrayOutputStream()
-                    imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, os)
-                    val path =
-                        MediaStore.Images.Media.insertImage(
-                            activity.contentResolver,
-                            imageBitmap,
-                            "profile_picture",
-                            null
-                        )
-                    sharePhotoToFacebook(path)
-                    Toast.makeText(activity.baseContext, path, Toast.LENGTH_SHORT).show()
-                }
+    private fun openCamera() {
+        val intentOpenCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (intentOpenCamera.resolveActivity(activity.packageManager) != null) {
+            activity.startActivityForResult(intentOpenCamera, CAMERA)
+        }
+    }
+
+    private fun getCaptureImageResult(data: Intent, shareDialog: ShareDialog) {
+        val thumbnail = data.extras.get("data") as Bitmap
+        val bytes = ByteArrayOutputStream()
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+        val destination =
+            File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
+        var fo: FileOutputStream
+        try {
+            destination.createNewFile()
+            fo = FileOutputStream(destination)
+            fo.write(bytes.toByteArray())
+            fo.close()
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        ShareDialog(thumbnail, shareDialog)
+    }
+    //...............end.............//
+
+
+    //...................................//
+    //......Implement share dialog......//
+    //.................................//
+    private fun ShareDialog(imagePath: Bitmap, shareDialog: ShareDialog) {
+        val photo = SharePhoto.Builder()
+            .setBitmap(imagePath)
+            .setCaption("Test...")
+            .build()
+        val content = SharePhotoContent.Builder()
+            .addPhoto(photo)
+            .build()
+        shareDialog.show(content)
+    }
+    //...............end.............//
+
+    override fun getRequestPermissionResult(requestCode: Int) {
+        when (requestCode) {
+            REQUEST_CAMERA_PERMISSION -> {
+                openCamera()
+            }
+            REQUEST_GALLERY_PERMISSION -> {
+                selectImageFromGallery()
             }
         }
     }
 
-    fun onOpenCamera() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(activity.packageManager) != null) {
-            activity.startActivityForResult(takePictureIntent, CAMERA)
-        }
-    }
-
-    private fun sharePhotoToFacebook(path: String){
-        val shareDialog = ShareDialog(activity)
-        if (ShareDialog.canShow(ShareLinkContent::class.java)){
-            val linkContent = ShareLinkContent.Builder()
-                .setContentTitle("Homestay")
-                .setImageUrl(Uri.parse(path))
-                .setContentDescription("Hotel Image")
-                .build()
-            shareDialog.show(linkContent)
-        }
-    }
-
     companion object {
-        const val REQUEST_CAMERA_PERMISSION = 1
         const val CAMERA = 2
+        const val GALLERY = 1
+        const val REQUEST_CAMERA_PERMISSION = 3
+        const val REQUEST_GALLERY_PERMISSION = 4
     }
 }

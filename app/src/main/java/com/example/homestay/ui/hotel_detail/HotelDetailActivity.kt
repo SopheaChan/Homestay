@@ -10,6 +10,8 @@ import com.example.homestay.R
 import com.example.homestay.custom.CustomDialog
 import com.example.homestay.custom.ImageSlider
 import com.example.homestay.ui.home.HomePresenter
+import com.facebook.CallbackManager
+import com.facebook.share.widget.ShareDialog
 import kotlinx.android.synthetic.main.activity_hotel_detail.*
 
 class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
@@ -19,6 +21,8 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var hotelAddress: String
     private val customDialog = CustomDialog(this@HotelDetailActivity)
     private val hotelDetailMvpPresenter: HotelDetailMvpPresenter = HotelDetailPresenter(this@HotelDetailActivity)
+    private lateinit var callbackManager: CallbackManager
+    private lateinit var shareDialog: ShareDialog
 
     private val imageSlider: ImageSlider = ImageSlider()
 
@@ -38,6 +42,8 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
         tvDetailHotelName.text = hotelName
         tvDetailHotelAddress.text = hotelAddress
 
+        callbackManager = CallbackManager.Factory.create()
+        shareDialog = ShareDialog(this)
 
         listImage.add("https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
         listImage.add("https://images.pexels.com/photos/167533/pexels-photo-167533.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=500&w=500")
@@ -73,6 +79,14 @@ class HotelDetailActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        hotelDetailMvpPresenter.getActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+        //Get activityResult from presenter
+        hotelDetailMvpPresenter.getActivityResult(requestCode, resultCode, data!!, shareDialog)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        //Get requestPermissionResult from presenter
+        hotelDetailMvpPresenter.getRequestPermissionResult(requestCode)
     }
 }
