@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import com.budiyev.android.codescanner.CodeScannerView
 import com.example.homestay.adapter.HomeAdapter
 import com.example.homestay.custom.CustomDialog
 import com.example.homestay.custom.DialogDisplayLoadingProgress
@@ -65,6 +66,7 @@ interface HomeMvpPresenter {
         itemFavorite: Int,
         itemProfile: Int,
         itemBooking: Int,
+        itemQrScanner: Int,
         drawer_layout: DrawerLayout,
         dialogDisplayLoadingProgress: DialogDisplayLoadingProgress,
         customDialog: CustomDialog)

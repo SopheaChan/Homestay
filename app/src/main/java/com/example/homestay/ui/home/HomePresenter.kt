@@ -21,6 +21,12 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
+import com.budiyev.android.codescanner.AutoFocusMode
+import com.budiyev.android.codescanner.CodeScanner
+import com.budiyev.android.codescanner.CodeScannerView
+import com.budiyev.android.codescanner.DecodeCallback
+import com.budiyev.android.codescanner.ErrorCallback
+import com.budiyev.android.codescanner.ScanMode
 import com.bumptech.glide.Glide
 import com.example.homestay.R
 import com.example.homestay.adapter.FavoriteHotelAdapter
@@ -37,6 +43,7 @@ import com.example.homestay.ui.login.LoginActivity
 import com.example.homestay.ui.hotel_detail.HotelDetailActivity
 import com.example.homestay.ui.maps.MapsActivity
 import com.example.homestay.ui.profile.ProfileActivity
+import com.example.homestay.ui.qr_code_scanner.QrCodeScannerActivity
 import com.example.homestay.utils.LocationPermission
 import com.example.homestay.utils.StoreCurrentUserInfo
 import com.google.firebase.auth.FirebaseAuth
@@ -546,6 +553,7 @@ class HomePresenter(private val context: Activity) : HomeMvpPresenter {
         itemFavorite: Int,
         itemProfile: Int,
         itemBooking: Int,
+        itemQrScanner: Int,
         drawer_layout: DrawerLayout,
         dialogDisplayLoadingProgress: DialogDisplayLoadingProgress,
         customDialog: CustomDialog
@@ -567,6 +575,9 @@ class HomePresenter(private val context: Activity) : HomeMvpPresenter {
             }
             R.id.nav_booking -> {
                 context.startActivity(Intent(context.baseContext, BookingRecord::class.java))
+            }
+            R.id.nav_qr_code_scanner -> {
+                context.startActivity(Intent(context, QrCodeScannerActivity::class.java))
             }
         }
 

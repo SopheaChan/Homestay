@@ -23,6 +23,7 @@ import android.view.animation.LayoutAnimationController
 import android.widget.AbsListView
 import android.widget.TextView
 import android.widget.Toast
+import com.budiyev.android.codescanner.CodeScannerView
 import com.example.homestay.R
 import com.example.homestay.adapter.HomeAdapter
 import com.example.homestay.custom.CustomDialog
@@ -40,7 +41,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     TextWatcher {
 
     private lateinit var recyclerView: RecyclerView
-//    private lateinit var recyclerView: com.mlsdev.animatedrv.AnimatedRecyclerView
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var listHotel: MutableList<HotelData>
 
@@ -49,7 +49,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var tvUserEmail: TextView
     private lateinit var dialogMenu: DialogMenu
     private lateinit var searchViewHandler: SearchView
-    private lateinit var mAuth: FirebaseAuth
     private var backPress: Int = 1
 
     private lateinit var customDialog: CustomDialog
@@ -129,7 +128,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 super.onScrollStateChanged(recyclerView, newState)
             }
         })*/
-
     }
 
     private fun onUserProfileClicked() {
@@ -193,6 +191,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_favorite,
             R.id.nav_profile,
             R.id.nav_booking,
+            R.id.nav_qr_code_scanner,
             drawer_layout,
             dialogDisplayLoadingProgress,
             customDialog
