@@ -78,10 +78,7 @@ class HotelDetailPresenter(private val activity: Activity) : HotelDetailMvpPrese
                 activity.startActivity(Intent(activity.baseContext, MapsActivity::class.java))
             }
             R.id.btnViewHotelDescription -> {
-//                customDialog.displayDialog(R.layout.dialog_view_hotel_description, R.style.DialogTheme)
-                if (checkCameraPermission()){
-                    openCamera()
-                }
+                customDialog.displayDialog(R.layout.dialog_view_hotel_description, R.style.DialogTheme)
             }
             R.id.btnBookHotel -> {
                 val intent = Intent(activity.baseContext, BookHotelActivity::class.java)

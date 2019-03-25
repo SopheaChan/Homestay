@@ -26,7 +26,10 @@
         <item
             android:id="@+id/nav_qr_code_scanner"
             android:icon="@drawable/ic_qr_code_scanner"
-            android:title="QR Scanner" />
+            android:title="QR Code Scanner" />
+        <item android:id="@+id/nav_generate_qr_code"
+            android:icon="@drawable/ic_qr_code_scanner"
+            android:title="QR Code Generator"/>
     </group>
 
     <item android:title="@string/text_more_action">

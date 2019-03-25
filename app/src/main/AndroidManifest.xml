@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -22,9 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.qr_code_scanner.QrCodeScannerActivity"></activity>
-        <activity android:name=".ui.TestActivity" />
-        <activity android:name=".ui.BaseActivity" />
+        <activity android:name=".ui.QRCodeGenerator"/>
+        <activity android:name=".ui.qr_code_scanner.QrCodeScannerActivity" />
         <activity
             android:name=".ui.booking_record.BookingRecord"
             android:screenOrientation="portrait"

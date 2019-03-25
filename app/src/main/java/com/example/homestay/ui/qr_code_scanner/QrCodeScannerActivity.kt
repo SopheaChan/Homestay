@@ -1,5 +1,6 @@
 package com.example.homestay.ui.qr_code_scanner
 
+import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,9 @@ import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.homestay.R
 import com.example.homestay.custom.CustomDialog
+import com.example.homestay.model.UserBasicInfo
+import com.example.homestay.utils.StoreCurrentUserInfo
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_qr_code_scanner.*
 
 class QrCodeScannerActivity : AppCompatActivity() {
@@ -28,6 +32,7 @@ class QrCodeScannerActivity : AppCompatActivity() {
         initScanner()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initScanner(){
         val codeScanner = CodeScanner(this, scanner_view)
         codeScanner.camera = CodeScanner.CAMERA_BACK
@@ -41,7 +46,8 @@ class QrCodeScannerActivity : AppCompatActivity() {
             runOnUiThread {
                 scanningResult.displayDialog(R.layout.dialog_layout_display_scanner_result, R.style.DialogBookHotelTheme)
                 val textDisplayScanningResult = scanningResult.getDialog().findViewById<TextView>(R.id.text_view_user_name)
-                textDisplayScanningResult.text = it.text
+                val result = Gson().fromJson(it.text, UserBasicInfo::class.java)
+                textDisplayScanningResult.text = result.name + result.address + result.age + result.sex
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS

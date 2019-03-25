@@ -1,9 +1,6 @@
 package com.example.homestay.ui.home
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -20,10 +17,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
-import android.widget.AbsListView
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.budiyev.android.codescanner.CodeScannerView
 import com.example.homestay.R
 import com.example.homestay.adapter.HomeAdapter
 import com.example.homestay.custom.CustomDialog
@@ -31,20 +27,22 @@ import com.example.homestay.custom.DialogDisplayLoadingProgress
 import com.example.homestay.custom.DialogMenu
 import com.example.homestay.listener.OnDialogMenuClickListener
 import com.example.homestay.model.HotelData
-import com.google.firebase.auth.FirebaseAuth
+import com.example.homestay.ui.QRCodeGenerator
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
+import kotlinx.android.synthetic.main.content_home.*
 
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-    TextWatcher {
+    TextWatcher, View.OnClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var listHotel: MutableList<HotelData>
 
     private lateinit var imgUserProfile: CircleImageView
+    private lateinit var imgProfileQRCode: ImageView
     private lateinit var tvUserName: TextView
     private lateinit var tvUserEmail: TextView
     private lateinit var dialogMenu: DialogMenu
@@ -70,6 +68,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val navHeader = nav_view.getHeaderView(0)
         imgUserProfile = navHeader.findViewById(R.id.imgUserProfilePicture)
+        imgProfileQRCode = navHeader.findViewById(R.id.nav_header_profile_qr_code)
         tvUserName = navHeader.findViewById(R.id.tvUserName)
         tvUserEmail = navHeader.findViewById(R.id.tvUserEmail)
         tvTitle = findViewById(R.id.tvAppTitle)
@@ -78,6 +77,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         imgUserProfile.setOnClickListener {
             onUserProfileClicked()
         }
+        imgProfileQRCode.setOnClickListener(this)
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
@@ -128,7 +128,30 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 super.onScrollStateChanged(recyclerView, newState)
             }
         })*/
+        refresh_home.setOnRefreshListener {
+            Toast.makeText(this, "Refreshing...", Toast.LENGTH_SHORT).show().also {
+                refresh_home.isRefreshing = false
+            }
+        }
+
+
+
+        /*val onScrollListener = object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    Toast.makeText(this@HomeActivity, "Last", Toast.LENGTH_SHORT).show()
+
+                }
+            }
+        }
+        recyclerView.addOnScrollListener(onScrollListener)*/
     }
+
 
     private fun onUserProfileClicked() {
         dialogMenu.displayDialog()
@@ -192,6 +215,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_profile,
             R.id.nav_booking,
             R.id.nav_qr_code_scanner,
+            R.id.nav_generate_qr_code,
             drawer_layout,
             dialogDisplayLoadingProgress,
             customDialog
@@ -224,6 +248,19 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         homePresenter.onListFilter(s.toString(), listHotel, homeAdapter)
+    }
+
+    override fun onClick(v: View?) {
+        val view = v?.id
+        when (view){
+            R.id.nav_header_profile_qr_code -> {
+                startActivity(Intent(this@HomeActivity, QRCodeGenerator::class.java))
+            }
+        }
+    }
+
+    private fun getDataList() {
+
     }
 
     override fun onDestroy() {

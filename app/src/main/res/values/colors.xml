@@ -13,4 +13,6 @@
     <color name="colorMaterialDarkBlue">#3F51B5</color>
     <color name="default_text_color">#BDBDBD</color>
     <color name="activity_profile_toolbar_background">#4CAF50</color>
+    <color name="color_black">#000000</color>
+    <color name="color_darker_grey">#616161</color>
 </resources>
