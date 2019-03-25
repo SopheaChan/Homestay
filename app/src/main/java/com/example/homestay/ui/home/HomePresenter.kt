@@ -555,7 +555,6 @@ class HomePresenter(private val context: Activity) : HomeMvpPresenter {
         itemProfile: Int,
         itemBooking: Int,
         itemQrScanner: Int,
-        itemQrGenerator: Int,
         drawer_layout: DrawerLayout,
         dialogDisplayLoadingProgress: DialogDisplayLoadingProgress,
         customDialog: CustomDialog
@@ -580,12 +579,6 @@ class HomePresenter(private val context: Activity) : HomeMvpPresenter {
             }
             R.id.nav_qr_code_scanner -> {
                 context.startActivity(Intent(context, QrCodeScannerActivity::class.java))
-            }
-            R.id.nav_generate_qr_code -> {
-                val intent= Intent(context, QRCodeGenerator::class.java)
-                intent.putExtra("valueA", "A")
-                intent.putExtra("valueB", "B")
-                context.startActivity(intent)
             }
         }
 

@@ -67,7 +67,6 @@ interface HomeMvpPresenter {
         itemProfile: Int,
         itemBooking: Int,
         itemQrScanner: Int,
-        itemQRGenerator: Int,
         drawer_layout: DrawerLayout,
         dialogDisplayLoadingProgress: DialogDisplayLoadingProgress,
         customDialog: CustomDialog)

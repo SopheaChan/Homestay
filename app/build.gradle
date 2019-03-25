@@ -67,6 +67,8 @@ dependencies {
     //QR_Code_Scanner
     implementation 'com.budiyev.android:code-scanner:2.1.0'
     //QR_Code_Generator
+//    implementation 'com.journeyapps:zxing-android-embedded:3.0.1@aar'
+    implementation 'com.google.zxing:core:3.3.3'
     //Image_Compressor
     implementation 'id.zelory:compressor:2.1.0'
 

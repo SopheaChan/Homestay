@@ -134,9 +134,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
-
-
-        /*val onScrollListener = object : RecyclerView.OnScrollListener(){
+        val onScrollListener = object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
             }
@@ -149,7 +147,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
         }
-        recyclerView.addOnScrollListener(onScrollListener)*/
+        recyclerView.addOnScrollListener(onScrollListener)
     }
 
 
@@ -215,7 +213,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_profile,
             R.id.nav_booking,
             R.id.nav_qr_code_scanner,
-            R.id.nav_generate_qr_code,
             drawer_layout,
             dialogDisplayLoadingProgress,
             customDialog
